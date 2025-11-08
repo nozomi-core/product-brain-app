@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "ProductBrain"
 include(":app")
 include(":service")
+include(":compose")
