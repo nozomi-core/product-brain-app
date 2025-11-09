@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import app.productbrain.data.MultiService
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.mp.KoinPlatform.getKoin
 
 import productbrain.composeapp.generated.resources.Res
 import productbrain.composeapp.generated.resources.compose_multiplatform
@@ -22,6 +24,8 @@ import productbrain.composeapp.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
+    val service = getKoin().get<MultiService>()
+
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
@@ -35,7 +39,7 @@ fun App() {
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
+                val greeting = remember { service.title }
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,

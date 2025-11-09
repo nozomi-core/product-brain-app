@@ -29,6 +29,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.android.koin)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -39,6 +40,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            //DI
+            implementation(libs.koin.core)
 
             //Project
             implementation(project(":data"))
