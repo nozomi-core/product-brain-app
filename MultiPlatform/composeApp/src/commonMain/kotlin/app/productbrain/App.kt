@@ -14,6 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import app.productbrain.data.MultiService
+import app.productbrain.data.database.AppDatabase
+import app.productbrain.data.database.TodoEntity
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.mp.KoinPlatform.getKoin
@@ -28,6 +30,16 @@ fun App() {
 
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
+
+        val db = getKoin().get<AppDatabase>()
+
+        LaunchedEffect(Unit) {
+            db.getDao().insert(TodoEntity(
+                4435,
+                "Common",
+                "content"
+            ))
+        }
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)
