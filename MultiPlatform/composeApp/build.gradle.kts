@@ -30,6 +30,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.android.koin)
+            implementation(libs.androidx.room.runtime)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
