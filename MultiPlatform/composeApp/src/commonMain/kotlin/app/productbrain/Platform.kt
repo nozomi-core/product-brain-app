@@ -1,7 +1,0 @@
-package app.productbrain
-
-interface Platform {
-    val name: String
-}
-
-expect fun getPlatform(): Platform

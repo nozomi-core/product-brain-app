@@ -1,65 +1,50 @@
 package app.productbrain
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import app.productbrain.data.MultiService
-import app.productbrain.data.database.AppDatabase
-import app.productbrain.data.database.TodoEntity
-import org.jetbrains.compose.resources.painterResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import app.productbrain.data.repository.login.LoginRepository
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.core.Koin
 import org.koin.mp.KoinPlatform.getKoin
-
-import productbrain.composeapp.generated.resources.Res
-import productbrain.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
 fun App() {
-    val service = getKoin().get<MultiService>()
-
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+        val navController = rememberNavController()
 
-        val db = getKoin().get<AppDatabase>()
+        doTest()
 
-        LaunchedEffect(Unit) {
-            db.getDao().insert(TodoEntity(
-                4435,
-                "Common",
-                "content"
-            ))
-        }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        NavHost(
+            navController = navController,
+            startDestination = "main"
         ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { service.title }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+            composable(route = "main") {
+                Scaffold { paddingValues ->
+                    Column(modifier = Modifier.padding(paddingValues)) {
+                        Text("Hello there")
+                    }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun doTest() {
+    val repo: LoginRepository = getKoin().get()
+
+    LaunchedEffect(Unit) {
+        repo.insertLogin().onSuccess { entity ->
+
         }
     }
 }

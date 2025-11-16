@@ -9,35 +9,24 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
+import app.productbrain.data.repository.login.LoginDao
+import app.productbrain.data.repository.login.LoginEntryEntity
 import kotlinx.coroutines.flow.Flow
 
-@Database(entities = [TodoEntity::class], version = 1)
+@Database(
+    entities =
+        [
+            LoginEntryEntity::class
+        ],
+    version = 1
+)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun getDao(): TodoDao
+    abstract fun loginDao(): LoginDao
 }
 
 // The Room compiler generates the `actual` implementations.
 @Suppress("KotlinNoActualForExpect")
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     override fun initialize(): AppDatabase
-}
-
-@Entity
-data class TodoEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val title: String,
-    val content: String
-)
-
-@Dao
-interface TodoDao {
-    @Insert
-    suspend fun insert(item: TodoEntity)
-
-    @Query("SELECT count(*) FROM TodoEntity")
-    suspend fun count(): Int
-
-    @Query("SELECT * FROM TodoEntity")
-    fun getAllAsFlow(): Flow<List<TodoEntity>>
 }

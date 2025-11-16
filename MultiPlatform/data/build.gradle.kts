@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.room)
 }
 
-
 kotlin {
     jvm()
     iosArm64()
