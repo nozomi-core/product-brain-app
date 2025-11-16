@@ -10,8 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import app.productbrain.data.SampleJson
 import app.productbrain.data.lang.Forest
 import app.productbrain.data.lang.Numbers
+import app.productbrain.data.lang.PlatformAssets
 import app.productbrain.data.lang.numberOf
 import app.productbrain.data.repository.login.LoginRepository
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -44,8 +46,16 @@ fun App() {
 @Composable
 fun doTest() {
     val repo: LoginRepository = getKoin().get()
+    val json: PlatformAssets = getKoin().get()
 
     LaunchedEffect(Unit) {
+
+        val sample = json.getJson("language/en.json", SampleJson.serializer()).onSuccess {
+            Forest.d("payload:${it.title}")
+        }
+
+
+
 
         val num1 = numberOf("15.33").getOrDefault(Numbers.Zero)
         val num2 = numberOf("90.77").getOrDefault(Numbers.Zero)

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.kotlin.serialisation)
 }
 
 kotlin {
@@ -12,10 +13,15 @@ kotlin {
     iosSimulatorArm64()
     
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.android.koin)
+        }
+
         commonMain.dependencies {
             implementation(libs.koin.core)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+            implementation(libs.serialization)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
