@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import app.productbrain.data.lang.Forest
+import app.productbrain.data.lang.Numbers
+import app.productbrain.data.lang.numberOf
 import app.productbrain.data.repository.login.LoginRepository
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.core.Koin
@@ -43,6 +46,13 @@ fun doTest() {
     val repo: LoginRepository = getKoin().get()
 
     LaunchedEffect(Unit) {
+
+        val num1 = numberOf("15.33").getOrDefault(Numbers.Zero)
+        val num2 = numberOf("90.77").getOrDefault(Numbers.Zero)
+
+        val result = num1 + num2
+
+        Forest.d("Summation: $result")
         repo.insertLogin().onSuccess { entity ->
 
         }

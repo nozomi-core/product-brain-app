@@ -1,5 +1,6 @@
 package app.productbrain.data.repository.login
 
+import app.productbrain.data.lang.Forest
 import app.productbrain.data.provider.ClockProvider
 import app.productbrain.data.provider.TransactionProvider
 
@@ -14,6 +15,7 @@ class LoginRepository(
             name = "example",
             instant =  time
         )
+        Forest.d("Welcome to the insert login: $time")
         dao.insert(model)
         model
     }

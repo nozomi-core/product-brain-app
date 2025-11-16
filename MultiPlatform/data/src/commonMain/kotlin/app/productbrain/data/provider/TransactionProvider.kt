@@ -1,17 +1,17 @@
 package app.productbrain.data.provider
 
-import androidx.room.RoomDatabase
 import androidx.room.immediateTransaction
 import androidx.room.useWriterConnection
-import app.productbrain.data.lang.DataResult
+import app.productbrain.data.database.AppDatabase
+import app.productbrain.data.lang.Maybe
 
 class TransactionProvider(
-    val database: RoomDatabase
+    val database: AppDatabase
 ) {
-    suspend fun <T> withTransaction(block: suspend () -> T): DataResult<T> {
+    suspend fun <T> withTransaction(block: suspend () -> T): Maybe<T> {
         return database.useWriterConnection { connection ->
             connection.immediateTransaction {
-                DataResult.tryResult(block)
+                Maybe.tryResult(block)
             }
         }
     }
