@@ -45,6 +45,7 @@ kotlin {
 
             //DI
             implementation(libs.koin.core)
+            implementation(libs.koin.view.model)
 
             //Project
             implementation(project(":data"))

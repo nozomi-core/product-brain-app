@@ -19,6 +19,24 @@ sealed class Maybe<out T> {
         }
     }
 
+    suspend fun <R> then(block: suspend (T) -> R): Maybe<R> {
+        return when (this) {
+            is Value -> {
+                try {
+                    Value(block(value))
+                } catch (e: Exception) {
+                    Error(e)
+                }
+            }
+            is Error -> this
+
+        }
+    }
+
+     suspend fun <R> pipe(block: suspend (Maybe<T>) -> Maybe<R>): Maybe<R> {
+        return block(this)
+    }
+
 
     companion object {
         suspend inline fun <T> tryResult(crossinline block: suspend () -> T): Maybe<T> {
@@ -34,6 +52,14 @@ sealed class Maybe<out T> {
                 Value(block())
             } catch (e: Exception) {
                 Error(e)
+            }
+        }
+
+        fun <T> of(value: T?): Maybe<T> {
+            return if(value == null) {
+                Error(null)
+            } else {
+                Value(value)
             }
         }
     }

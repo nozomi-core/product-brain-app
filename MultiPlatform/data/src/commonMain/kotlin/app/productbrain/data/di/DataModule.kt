@@ -5,6 +5,8 @@ import app.productbrain.data.provider.ClockProvider
 import app.productbrain.data.provider.TransactionProvider
 import app.productbrain.data.repository.login.LoginDao
 import app.productbrain.data.repository.login.LoginRepository
+import app.productbrain.data.service.StartupService
+import app.productbrain.data.service.StartupServiceObserver
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -13,4 +15,6 @@ val dataModule = module {
     single { TransactionProvider(get()) }
 
     single<LoginDao> { get<AppDatabase>().loginDao()  }
+
+    single<StartupServiceObserver> { StartupService() }
 }

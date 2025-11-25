@@ -7,26 +7,39 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import app.productbrain.data.SampleJson
-import app.productbrain.data.lang.Forest
-import app.productbrain.data.lang.Numbers
-import app.productbrain.data.lang.PlatformAssets
-import app.productbrain.data.lang.numberOf
-import app.productbrain.data.repository.login.LoginRepository
+import app.productbrain.feature.startup.StartupViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.core.Koin
-import org.koin.mp.KoinPlatform.getKoin
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
 fun App() {
+    val startupViewModel = koinViewModel<StartupViewModel>()
+    val startState by startupViewModel.viewState.collectAsStateWithLifecycle(StartupViewModel.ViewState.Cold)
+
+    when(startState) {
+        is StartupViewModel.ViewState.Cold -> ColdApp()
+        is StartupViewModel.ViewState.Ready -> ReadyApp()
+    }
+}
+
+@Composable
+fun ColdApp() {
+    Scaffold { p ->
+        Column(modifier = Modifier.padding(p)) {
+            Text("Loading...")
+        }
+    }
+}
+
+@Composable
+fun ReadyApp() {
     MaterialTheme {
         val navController = rememberNavController()
-
-        doTest()
 
         NavHost(
             navController = navController,
@@ -39,32 +52,6 @@ fun App() {
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun doTest() {
-    val repo: LoginRepository = getKoin().get()
-    val json: PlatformAssets = getKoin().get()
-
-    LaunchedEffect(Unit) {
-
-        val sample = json.getJson("language/en.json", SampleJson.serializer()).onSuccess {
-            Forest.d("payload:${it.title}")
-        }
-
-
-
-
-        val num1 = numberOf("15.33").getOrDefault(Numbers.Zero)
-        val num2 = numberOf("90.77").getOrDefault(Numbers.Zero)
-
-        val result = num1 + num2
-
-        Forest.d("Summation: $result")
-        repo.insertLogin().onSuccess { entity ->
-
         }
     }
 }
