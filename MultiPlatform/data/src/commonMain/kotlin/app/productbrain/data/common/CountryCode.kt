@@ -7,10 +7,7 @@ enum class CountryCode(
     AU("AU", "Australia"),
     US("US", "United Stated"),
     CA("CA", "Canada");
-
     companion object {
-        fun findByCode(code: String): CountryCode? {
-            return entries.find { it.code == code }
-        }
+        fun findByCode(code: String): CountryCode? = entries.find { it.code == code }
     }
 }

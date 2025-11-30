@@ -7,6 +7,7 @@ import app.productbrain.di.androidModules
 import app.productbrain.di.commonModule
 import app.productbrain.di.serviceModule
 import app.productbrain.di.useCaseModule
+import app.productbrain.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -16,6 +17,7 @@ class AndroidApplication: Application() {
         startKoin {
             modules(
                 commonModule,
+                viewModelModule,
                 serviceModule,
                 useCaseModule,
                 dataModule,

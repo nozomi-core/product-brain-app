@@ -12,22 +12,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.productbrain.data.common.CountryCode
-import app.productbrain.data.repository.settings.SettingList
-import app.productbrain.data.repository.settings.SettingsRepository
+import app.productbrain.design.effect.ObserveEvents
 import app.productbrain.design.theme.ProTheme
 import app.productbrain.design.theme.ProductTheme
-import kotlinx.coroutines.launch
-import org.koin.compose.getKoin
+import app.productbrain.feature.startup.viewmodel.UserOnboardingViewModel
+import app.productbrain.feature.startup.viewmodel.UserOnboardingViewModel.*
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun UserOnboardingRoute(onCompleted: () -> Unit) {
-    val scope = rememberCoroutineScope()
-    val repo = getKoin().get<SettingsRepository>()
+    val viewModel = koinViewModel<UserOnboardingViewModel>()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle(false)
 
+    ObserveEvents(viewModel.effect) { event ->
+        when(event) {
+            is Effect.OnBoardingCompleted -> onCompleted()
+        }
+    }
+
+    UserOnBoardingScreen(
+        viewState = viewState,
+        send = viewModel::sendAction
+    )
+}
+
+@Composable
+fun UserOnBoardingScreen(
+    viewState: Boolean,
+    send: (Action) -> Unit
+) {
     ProTheme {
         Scaffold(
             bottomBar = {
@@ -35,12 +52,10 @@ fun UserOnboardingRoute(onCompleted: () -> Unit) {
                     bottom = ProductTheme.spacing.extraLarge
                 )) {
                     Button(
+                        enabled = viewState,
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
-                            scope.launch {
-                                repo.set(SettingList.ONBOARDING_COMPLETE, true)
-                                onCompleted()
-                            }
+                            send(Action.FinishOnboarding)
                         }
                     ) {
                         Text("Complete")
@@ -49,6 +64,15 @@ fun UserOnboardingRoute(onCompleted: () -> Unit) {
             }
         ) { p ->
             Column(modifier = Modifier.padding(p))  {
+
+                Button(
+                    onClick = {
+                        send(Action.SetDefault)
+                    }
+                ) {
+                    Text("Set default")
+                }
+
                 Column {
                     Text("UserOnBoarding")
 
@@ -65,7 +89,6 @@ fun UserOnboardingRoute(onCompleted: () -> Unit) {
                             Text(code.displayName)
                         }
                     }
-
                 }
             }
         }

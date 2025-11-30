@@ -14,4 +14,8 @@ interface SettingsDao {
 
     @Query("SELECT * FROM settings")
     suspend fun getAllSettings(): List<SettingEntity>
+
+
+    @Query("SELECT * FROM settings")
+    fun getAllSettingsFlow(): Flow<List<SettingEntity>>
 }
