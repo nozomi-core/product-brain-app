@@ -3,7 +3,7 @@ package app.productbrain.feature.startup.usecase
 import app.productbrain.data.repository.settings.SettingItem
 import app.productbrain.data.repository.settings.SettingsRepository
 
-class DoesUserNeedOnboardingUseCase(
+class IsUserOnBoardedUseCase(
     private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(): Result {

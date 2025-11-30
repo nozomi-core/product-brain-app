@@ -16,7 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.productbrain.data.common.CountryCode
-import app.productbrain.design.effect.ObserveEvents
+import app.productbrain.design.effect.ObserveEffect
 import app.productbrain.design.theme.ProTheme
 import app.productbrain.design.theme.ProductTheme
 import app.productbrain.feature.startup.viewmodel.UserOnboardingViewModel
@@ -26,10 +26,10 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun UserOnboardingRoute(onCompleted: () -> Unit) {
     val viewModel = koinViewModel<UserOnboardingViewModel>()
-    val viewState by viewModel.viewState.collectAsStateWithLifecycle(false)
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle(ViewState.Cold)
 
-    ObserveEvents(viewModel.effect) { event ->
-        when(event) {
+    ObserveEffect(viewModel.effect) { effect ->
+        when (effect) {
             is Effect.OnBoardingCompleted -> onCompleted()
         }
     }
@@ -42,17 +42,19 @@ fun UserOnboardingRoute(onCompleted: () -> Unit) {
 
 @Composable
 fun UserOnBoardingScreen(
-    viewState: Boolean,
+    viewState: ViewState,
     send: (Action) -> Unit
 ) {
     ProTheme {
         Scaffold(
             bottomBar = {
-                Box(modifier = Modifier.padding(
-                    bottom = ProductTheme.spacing.extraLarge
-                )) {
+                Box(
+                    modifier = Modifier.padding(
+                        bottom = ProductTheme.spacing.extraLarge
+                    )
+                ) {
                     Button(
-                        enabled = viewState,
+                        enabled = viewState is ViewState.OnBoardingDone,
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             send(Action.FinishOnboarding)
@@ -63,7 +65,7 @@ fun UserOnBoardingScreen(
                 }
             }
         ) { p ->
-            Column(modifier = Modifier.padding(p))  {
+            Column(modifier = Modifier.padding(p)) {
 
                 Button(
                     onClick = {

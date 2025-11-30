@@ -1,10 +1,12 @@
 package app.productbrain.feature.startup.service
 
-import app.productbrain.feature.startup.usecase.DoesUserNeedOnboardingUseCase
+import app.productbrain.feature.startup.usecase.IsUserOnBoardedUseCase
+import app.productbrain.feature.startup.usecase.GetCurrentLocalUserUseCase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -14,7 +16,8 @@ interface StartupServiceObserver {
 }
 
 class StartupService(
-    private val doesUserNeedOnboarding: DoesUserNeedOnboardingUseCase
+    private val doesUserNeedOnboarding: IsUserOnBoardedUseCase,
+    private val getCurrentLocalUserUseCase: GetCurrentLocalUserUseCase
 ): StartupServiceObserver {
     private val state = MutableStateFlow<State>(State.Cold)
     override val startUpState: StateFlow<State>
@@ -29,22 +32,23 @@ class StartupService(
         loadState()
     }
 
-    private fun initialise() {
+    private  fun initialise() {
         state.update {
             State.Initialising
         }
         loadState()
-
     }
 
     private fun loadState() {
         //TODO: Do init step... Fix Global scope, use a supervisor job
         GlobalScope.launch {
             val doesUserNeedOnboarding = doesUserNeedOnboarding()
+            val currentUser = getCurrentLocalUserUseCase().first()
 
             state.update {
                 State.StartupComplete(
-                    isOnboarded = doesUserNeedOnboarding
+                    isOnboarded = doesUserNeedOnboarding,
+                    currentUser = currentUser
                 )
             }
         }
@@ -54,6 +58,9 @@ class StartupService(
     sealed interface State {
         object Cold : State
         object Initialising : State
-        data class StartupComplete(val isOnboarded: DoesUserNeedOnboardingUseCase.Result) : State
+        data class StartupComplete(
+            val isOnboarded: IsUserOnBoardedUseCase.Result,
+            val currentUser: GetCurrentLocalUserUseCase.Result
+        ) : State
     }
 }

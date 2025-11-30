@@ -1,0 +1,24 @@
+package app.productbrain.feature.startup.usecase
+
+import app.productbrain.data.lang.Maybe
+import app.productbrain.data.lang.UlidFactory
+import app.productbrain.data.provider.ClockProvider
+import app.productbrain.data.repository.localuser.LocalUser
+import app.productbrain.data.repository.localuser.LocalUserId
+import app.productbrain.data.repository.localuser.LocalUserRepository
+
+class CreateLocalUserUseCase(
+    private val localUserRepository: LocalUserRepository,
+    private val clockProvider: ClockProvider
+) {
+    suspend operator fun invoke(): Maybe<LocalUser> {
+        return Maybe.tryResult {
+            val localUser = LocalUser(
+                userId = LocalUserId(UlidFactory.create().value),
+                createdAt = clockProvider.now()
+            )
+            localUserRepository.upsert(localUser)
+            localUser
+        }
+    }
+}

@@ -1,8 +1,10 @@
 package app.productbrain.data
 
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
 
-data class ClockInstant(val utcMillis: Long) {
+@JvmInline
+value class ClockInstant(val utcMillis: Long) {
 
     companion object {
         val DEFAULT = ClockInstant(0)

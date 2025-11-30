@@ -6,11 +6,17 @@ import app.productbrain.data.common.CurrencyCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class SettingsRepository(
+interface SettingsRepository {
+    suspend fun <T : Any> get(key: SettingKey<T>): T
+    suspend fun <T : Any> set(key: SettingKey<T>, value: T)
+    fun requireSettingKeySet(requireSettings: List<SettingKey<*>>): Flow<Boolean>
+}
+
+class SettingsRepositoryActual(
     private val dao: SettingsDao
-) {
+): SettingsRepository {
     @Suppress("UNCHECKED_CAST")
-    suspend fun <T : Any> get(key: SettingKey<T>): T {
+    override suspend fun <T : Any> get(key: SettingKey<T>): T {
         val entity = dao.getRaw(key.key) ?: return key.defaultValue
         val stored = entity.value
 
@@ -29,7 +35,7 @@ class SettingsRepository(
         return value as T
     }
 
-    suspend fun <T : Any> set(key: SettingKey<T>, value: T) {
+    override suspend fun <T : Any> set(key: SettingKey<T>, value: T) {
         val value: String = when (value) {
             is String,
             is Int,
@@ -45,7 +51,7 @@ class SettingsRepository(
         dao.setRaw(SettingEntity(key.key, value))
     }
 
-    fun requireSettingKeySet(requireSettings: List<SettingKey<*>>): Flow<Boolean> {
+    override fun requireSettingKeySet(requireSettings: List<SettingKey<*>>): Flow<Boolean> {
         return dao.getAllSettingsFlow().map { settingList ->
             val allSetKeys = settingList.map { it.key }
 
