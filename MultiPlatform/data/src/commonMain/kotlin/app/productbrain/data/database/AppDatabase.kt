@@ -4,22 +4,18 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
-import app.productbrain.data.repository.login.LoginDao
-import app.productbrain.data.repository.login.LoginEntryEntity
 import app.productbrain.data.repository.settings.SettingEntity
 import app.productbrain.data.repository.settings.SettingsDao
 
 @Database(
     entities =
         [
-            LoginEntryEntity::class,
             SettingEntity::class
         ],
     version = 1
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun loginDao(): LoginDao
     abstract fun settingsDao(): SettingsDao
 }
 

@@ -1,7 +1,7 @@
-package app.productbrain.data.service
+package app.productbrain.feature.startup.service
 
+import app.productbrain.feature.startup.usecase.DoesUserNeedOnboardingUseCase
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,35 +10,50 @@ import kotlinx.coroutines.launch
 
 interface StartupServiceObserver {
     val startUpState: StateFlow<StartupService.State>
+    fun invalidate()
 }
 
-class StartupService: StartupServiceObserver {
+class StartupService(
+    private val doesUserNeedOnboarding: DoesUserNeedOnboardingUseCase
+): StartupServiceObserver {
     private val state = MutableStateFlow<State>(State.Cold)
     override val startUpState: StateFlow<State>
         get() {
-            if(state.value == State.Cold) {
+            if (state.value == State.Cold) {
                 initialise()
             }
             return state.asStateFlow()
         }
 
+    override fun invalidate() {
+        loadState()
+    }
+
     private fun initialise() {
         state.update {
             State.Initialising
         }
+        loadState()
+
+    }
+
+    private fun loadState() {
         //TODO: Do init step... Fix Global scope, use a supervisor job
         GlobalScope.launch {
-            delay(5000)
+            val doesUserNeedOnboarding = doesUserNeedOnboarding()
+
             state.update {
-                State.StartupComplete
+                State.StartupComplete(
+                    isOnboarded = doesUserNeedOnboarding
+                )
             }
         }
     }
 
 
     sealed interface State {
-        object Cold: State
-        object Initialising: State
-        object StartupComplete: State
+        object Cold : State
+        object Initialising : State
+        data class StartupComplete(val isOnboarded: DoesUserNeedOnboardingUseCase.Result) : State
     }
 }

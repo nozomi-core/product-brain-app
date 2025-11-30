@@ -1,7 +1,10 @@
 package app.productbrain.data.repository.settings
 
+import app.productbrain.data.common.CountryCode
 
-class SettingsRepository(private val dao: SettingsDao) {
+class SettingsRepository(
+    private val dao: SettingsDao
+) {
 
     @Suppress("UNCHECKED_CAST")
     suspend fun <T> get(key: SettingKey<T>): T {
@@ -14,6 +17,7 @@ class SettingsRepository(private val dao: SettingsDao) {
             is Boolean -> stored.toBooleanStrict()
             is Float   -> stored.toFloat()
             is Long    -> stored.toLong()
+            is CountryCode -> CountryCode.findByCode(entity.value) ?: key.defaultValue
             else -> throw IllegalStateException("Unsupported type")
         }
 
@@ -21,6 +25,16 @@ class SettingsRepository(private val dao: SettingsDao) {
     }
 
     suspend fun <T> set(key: SettingKey<T>, value: T) {
-        dao.setRaw(SettingEntity(key.key, value.toString()))
+        val value: String = when (value) {
+            is String,
+            is Int,
+            is Boolean,
+            is Float,
+            is Long  -> value.toString()
+            is CountryCode -> value.code
+            else -> throw IllegalStateException("Unsupported type")
+        }
+
+        dao.setRaw(SettingEntity(key.key, value))
     }
 }

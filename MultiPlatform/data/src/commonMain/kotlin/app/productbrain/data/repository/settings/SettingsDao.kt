@@ -1,6 +1,7 @@
 package app.productbrain.data.repository.settings
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SettingsDao {
@@ -10,4 +11,7 @@ interface SettingsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setRaw(entity: SettingEntity)
+
+    @Query("SELECT * FROM settings")
+    suspend fun getAllSettings(): List<SettingEntity>
 }
