@@ -2,8 +2,8 @@ package app.productbrain.feature.startup.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.productbrain.data.common.CountryCode
-import app.productbrain.data.common.CurrencyCode
+import app.productbrain.data.common.CountryCodeTag
+import app.productbrain.data.common.CurrencyCodeTag
 import app.productbrain.data.repository.settings.SettingItem
 import app.productbrain.data.repository.settings.SettingsRepository
 import app.productbrain.feature.startup.usecase.CompleteOnBoardingUseCase
@@ -21,7 +21,7 @@ class UserOnboardingViewModel(
     val effect = _effect.receiveAsFlow()
 
     val viewState: Flow<ViewState> = settingsRepository.requireSettingKeySet(
-        listOf(SettingItem.COUNTRY_CODE, SettingItem.CURRENCY_CODE)
+        listOf(SettingItem.CountryCode, SettingItem.CountryCode)
     ).map {
         if(it) {
             ViewState.OnBoardingDone
@@ -46,8 +46,8 @@ class UserOnboardingViewModel(
 
     private fun doSetDefault() {
         viewModelScope.launch {
-            settingsRepository.set(SettingItem.CURRENCY_CODE, CurrencyCode.AUD)
-            settingsRepository.set(SettingItem.COUNTRY_CODE, CountryCode.AU)
+            settingsRepository.set(SettingItem.CurrencyCode, CurrencyCodeTag.AUD)
+            settingsRepository.set(SettingItem.CountryCode, CountryCodeTag.AU)
         }
     }
 

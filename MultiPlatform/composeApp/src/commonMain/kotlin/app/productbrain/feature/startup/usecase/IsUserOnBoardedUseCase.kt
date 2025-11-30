@@ -7,7 +7,7 @@ class IsUserOnBoardedUseCase(
     private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(): Result {
-        val isOnboarded = settingsRepository.get(SettingItem.ONBOARDING_COMPLETE)
+        val isOnboarded = settingsRepository.get(SettingItem.OnBoardingComplete)
         return if(isOnboarded) {
             Result.OnBoardingComplete
         } else {

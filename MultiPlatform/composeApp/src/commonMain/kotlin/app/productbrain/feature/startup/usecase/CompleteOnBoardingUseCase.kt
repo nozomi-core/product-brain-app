@@ -10,7 +10,7 @@ class CompleteOnBoardingUseCase(
 ) {
 
     suspend operator fun invoke() {
-        settingsRepository.set(SettingItem.ONBOARDING_COMPLETE, true)
-        settingsRepository.set(SettingItem.ONBOARDING_TIME, clockProvider.now())
+        settingsRepository.set(SettingItem.OnBoardingComplete, true)
+        settingsRepository.set(SettingItem.OnBoardingTime, clockProvider.now())
     }
 }

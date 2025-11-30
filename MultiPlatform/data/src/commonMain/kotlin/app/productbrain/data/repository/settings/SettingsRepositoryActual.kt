@@ -1,22 +1,22 @@
 package app.productbrain.data.repository.settings
 
 import app.productbrain.data.ClockInstant
-import app.productbrain.data.common.CountryCode
-import app.productbrain.data.common.CurrencyCode
+import app.productbrain.data.common.CountryCodeTag
+import app.productbrain.data.common.CurrencyCodeTag
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 interface SettingsRepository {
-    suspend fun <T : Any> get(key: SettingKey<T>): T
-    suspend fun <T : Any> set(key: SettingKey<T>, value: T)
-    fun requireSettingKeySet(requireSettings: List<SettingKey<*>>): Flow<Boolean>
+    suspend fun <T : Any> get(key: SettingItem<T>): T
+    suspend fun <T : Any> set(key: SettingItem<T>, value: T)
+    fun requireSettingKeySet(requireSettings: List<SettingItem<*>>): Flow<Boolean>
 }
 
 class SettingsRepositoryActual(
     private val dao: SettingsDao
 ): SettingsRepository {
     @Suppress("UNCHECKED_CAST")
-    override suspend fun <T : Any> get(key: SettingKey<T>): T {
+    override suspend fun <T : Any> get(key: SettingItem<T>): T {
         val entity = dao.getRaw(key.key) ?: return key.defaultValue
         val stored = entity.value
 
@@ -26,8 +26,8 @@ class SettingsRepositoryActual(
             Boolean::class -> stored.toBooleanStrict()
             Float::class   -> stored.toFloat()
             Long::class    -> stored.toLong()
-            CountryCode::class -> CountryCode.findByCode(entity.value) ?: key.defaultValue
-            CurrencyCode::class -> CurrencyCode.findByCode(entity.value) ?: key.defaultValue
+            CountryCodeTag::class -> CountryCodeTag.findByCode(entity.value) ?: key.defaultValue
+            CurrencyCodeTag::class -> CurrencyCodeTag.findByCode(entity.value) ?: key.defaultValue
             ClockInstant::class -> ClockInstant(stored.toLong())
             else -> throw IllegalStateException("Unsupported type")
         }
@@ -35,15 +35,15 @@ class SettingsRepositoryActual(
         return value as T
     }
 
-    override suspend fun <T : Any> set(key: SettingKey<T>, value: T) {
+    override suspend fun <T : Any> set(key: SettingItem<T>, value: T) {
         val value: String = when (value) {
             is String,
             is Int,
             is Boolean,
             is Float,
             is Long  -> value.toString()
-            is CountryCode -> value.code
-            is CurrencyCode -> value.code
+            is CountryCodeTag -> value.code
+            is CurrencyCodeTag -> value.code
             is ClockInstant -> value.utcMillis.toString()
             else -> throw IllegalStateException("Unsupported type")
         }
@@ -51,7 +51,7 @@ class SettingsRepositoryActual(
         dao.setRaw(SettingEntity(key.key, value))
     }
 
-    override fun requireSettingKeySet(requireSettings: List<SettingKey<*>>): Flow<Boolean> {
+    override fun requireSettingKeySet(requireSettings: List<SettingItem<*>>): Flow<Boolean> {
         return dao.getAllSettingsFlow().map { settingList ->
             val allSetKeys = settingList.map { it.key }
 

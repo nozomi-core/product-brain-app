@@ -1,6 +1,6 @@
 package app.productbrain.data.common
 
-enum class CurrencyCode(
+enum class CurrencyCodeTag(
     val code: String
 ) {
     AUD("AUD"),
@@ -8,6 +8,6 @@ enum class CurrencyCode(
     USD("USD");
 
     companion object {
-        fun findByCode(code: String): CurrencyCode? = entries.find { it.code == code }
+        fun findByCode(code: String): CurrencyCodeTag? = entries.find { it.code == code }
     }
 }

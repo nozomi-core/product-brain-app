@@ -1,6 +1,6 @@
 package app.productbrain.data.common
 
-enum class CountryCode(
+enum class CountryCodeTag(
     val code: String,
     val displayName: String
 ) {
@@ -8,6 +8,6 @@ enum class CountryCode(
     US("US", "United Stated"),
     CA("CA", "Canada");
     companion object {
-        fun findByCode(code: String): CountryCode? = entries.find { it.code == code }
+        fun findByCode(code: String): CountryCodeTag? = entries.find { it.code == code }
     }
 }
