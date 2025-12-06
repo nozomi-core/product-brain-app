@@ -19,9 +19,9 @@ fun MainApp() {
 
         NavHost(
             navController = navController,
-            startDestination = NavRoutes.main
+            startDestination = NavRoutes.Main
         ) {
-            composable(route = NavRoutes.main) {
+            composable(route = NavRoutes.Main::class) {
                 Scaffold { paddingValues ->
                     Column(modifier = Modifier.padding(paddingValues)) {
                         Text("Hello there")
@@ -29,7 +29,7 @@ fun MainApp() {
                 }
             }
 
-            composable(route = NavRoutes.next) {
+            composable(route = NavRoutes.Next::class) {
                 Scaffold { p ->
                     Column(modifier = Modifier.padding(p)) {
                         Text("Next")

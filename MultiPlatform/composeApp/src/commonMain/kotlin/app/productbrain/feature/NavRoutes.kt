@@ -1,6 +1,10 @@
 package app.productbrain.feature
 
-object NavRoutes {
-    const val main = "main"
-    const val next = "next"
+import kotlinx.serialization.Serializable
+
+sealed class NavRoutes {
+    @Serializable
+    object Main: NavRoutes()
+    @Serializable
+    object Next: NavRoutes()
 }
