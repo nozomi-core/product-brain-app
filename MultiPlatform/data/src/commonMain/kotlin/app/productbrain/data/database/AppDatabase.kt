@@ -9,13 +9,16 @@ import app.productbrain.data.model.settings.SettingEntity
 import app.productbrain.data.model.settings.SettingsDao
 import app.productbrain.data.model.localuser.LocalUserDao
 import app.productbrain.data.model.localuser.LocalUserEntity
+import app.productbrain.data.model.vendor.VendorDao
+import app.productbrain.data.model.vendor.VendorEntity
 
 @Database(
     entities =
         [
             SettingEntity::class,
             LocalUserEntity::class,
-            CurrentLocalUserEntity::class
+            CurrentLocalUserEntity::class,
+            VendorEntity::class
         ],
     version = 1
 )
@@ -23,6 +26,7 @@ import app.productbrain.data.model.localuser.LocalUserEntity
 abstract class AppDatabase : RoomDatabase() {
     abstract fun settingsDao(): SettingsDao
     abstract fun localUserDao(): LocalUserDao
+    abstract fun vendorDao(): VendorDao
 }
 
 // The Room compiler generates the `actual` implementations.

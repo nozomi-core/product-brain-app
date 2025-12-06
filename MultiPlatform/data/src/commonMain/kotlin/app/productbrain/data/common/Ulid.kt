@@ -1,4 +1,4 @@
-package app.productbrain.data.lang
+package app.productbrain.data.common
 
 import kotlin.jvm.JvmInline
 import kotlin.random.Random
@@ -85,4 +85,8 @@ object UlidFactory {
 }
 
 @JvmInline
-value class Ulid(val value: String)
+value class Ulid(val value: String) {
+    companion object {
+        fun create() = UlidFactory.create()
+    }
+}

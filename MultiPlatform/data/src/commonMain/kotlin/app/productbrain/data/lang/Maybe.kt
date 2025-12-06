@@ -51,7 +51,6 @@ sealed class Maybe<out T> {
             return try {
                 Value(block())
             } catch (e: Exception) {
-                e.printStackTrace()
                 Error(e)
             }
         }
@@ -60,7 +59,6 @@ sealed class Maybe<out T> {
             return try {
                 Value(block())
             } catch (e: Exception) {
-                e.printStackTrace()
                 Error(e)
             }
         }

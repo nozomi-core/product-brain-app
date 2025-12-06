@@ -7,4 +7,6 @@ sealed class NavRoute {
     class Home(val id: String): NavRoute()
     @Serializable
     object Next: NavRoute()
+    @Serializable
+    object AddVendorRoute: NavRoute()
 }

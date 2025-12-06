@@ -1,7 +1,7 @@
 package app.productbrain.feature.startup.usecase
 
 import app.productbrain.data.lang.Maybe
-import app.productbrain.data.lang.UlidFactory
+import app.productbrain.data.common.UlidFactory
 import app.productbrain.data.provider.ClockProvider
 import app.productbrain.data.model.localuser.LocalUser
 import app.productbrain.data.model.localuser.LocalUserId

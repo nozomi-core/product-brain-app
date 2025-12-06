@@ -12,6 +12,7 @@ import app.productbrain.feature.NavRoute
 import app.productbrain.feature.Navigator
 import app.productbrain.feature.home.HomeRoute
 import app.productbrain.feature.home.NextRoute
+import app.productbrain.feature.vendor.view.AddVendorRoute
 
 class MainNavigator(val controller: NavController): Navigator {
     override fun toRoute(route: NavRoute) {
@@ -30,7 +31,7 @@ fun MainApp() {
 
         NavHost(
             navController = navController,
-            startDestination = NavRoute.Home("001")
+            startDestination = NavRoute.AddVendorRoute
         ) {
             composable(route = NavRoute.Home::class) { entry ->
                 HomeRoute(
@@ -44,6 +45,10 @@ fun MainApp() {
                     entry.toRoute(),
                     navigator
                 )
+            }
+
+            composable(route = NavRoute.AddVendorRoute::class) {
+                AddVendorRoute()
             }
         }
     }

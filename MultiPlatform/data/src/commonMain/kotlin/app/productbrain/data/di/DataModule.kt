@@ -9,6 +9,9 @@ import app.productbrain.data.model.settings.SettingsRepository
 import app.productbrain.data.model.settings.SettingsRepositoryActual
 import app.productbrain.data.model.localuser.LocalUserRepository
 import app.productbrain.data.model.localuser.LocalUserRepositoryActual
+import app.productbrain.data.model.vendor.VendorDao
+import app.productbrain.data.model.vendor.VendorRepository
+import app.productbrain.data.model.vendor.VendorRepositoryActual
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -18,9 +21,11 @@ val dataModule = module {
 
     //DAO's
     single<SettingsDao> { get<AppDatabase>().settingsDao() }
-    single<LocalUserDao> { get<AppDatabase>().localUserDao()  }
+    single<LocalUserDao> { get<AppDatabase>().localUserDao() }
+    single<VendorDao> { get<AppDatabase>().vendorDao() }
 
     //Repositories
     factory<SettingsRepository> { SettingsRepositoryActual(get()) }
     factory<LocalUserRepository> { LocalUserRepositoryActual(get()) }
+    factory<VendorRepository> { VendorRepositoryActual(get()) }
 }

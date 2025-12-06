@@ -11,6 +11,7 @@ interface LocalUserDao {
     /* Table/LocalUserEntity */
     @Upsert
     suspend fun upsert(entity: LocalUserEntity)
+
     @Query("SELECT * from local_user")
     fun getLocalUserFlow(): Flow<LocalUserEntity>
 

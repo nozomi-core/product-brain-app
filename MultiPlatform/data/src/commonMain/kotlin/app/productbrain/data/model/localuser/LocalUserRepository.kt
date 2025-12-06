@@ -13,7 +13,7 @@ interface LocalUserRepository {
     suspend fun setCurrentLocalUser(user: LocalUser)
 }
 
-class LocalUserRepositoryActual(
+internal class LocalUserRepositoryActual(
     private val localUserDao: LocalUserDao
 ): LocalUserRepository {
     override suspend fun upsert(user: LocalUser) {

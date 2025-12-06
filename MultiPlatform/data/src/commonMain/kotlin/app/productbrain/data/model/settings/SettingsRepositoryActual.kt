@@ -12,7 +12,7 @@ interface SettingsRepository {
     fun requireSettingKeySet(requireSettings: List<SettingItem<*>>): Flow<Boolean>
 }
 
-class SettingsRepositoryActual(
+internal class SettingsRepositoryActual(
     private val dao: SettingsDao
 ): SettingsRepository {
     @Suppress("UNCHECKED_CAST")

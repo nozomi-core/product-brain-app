@@ -1,6 +1,7 @@
 package app.productbrain.data.lang
 
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 actual fun numberOf(value: String): Maybe<BigNumber> {
     return Maybe.tryResultBlocking {
@@ -17,11 +18,20 @@ value class AndroidBigNumber(private val value: BigDecimal) : BigNumber {
         }
     }
 
+    override fun toDisplay(precision: Int): String {
+        val roundedValue = value.setScale(precision, RoundingMode.HALF_UP)
+        return roundedValue.toString()
+    }
+
     override fun toString(): String {
         return value.toString()
     }
 }
 
 actual fun numberOf(value: Int): BigNumber {
+    return AndroidBigNumber(BigDecimal(value))
+}
+
+actual fun numberOf(value: Double): BigNumber {
     return AndroidBigNumber(BigDecimal(value))
 }
