@@ -5,6 +5,7 @@ import app.productbrain.feature.startup.service.StartupService
 import app.productbrain.feature.startup.service.StartupServiceObserver
 import app.productbrain.feature.startup.usecase.IsUserOnBoardedUseCase
 import app.productbrain.feature.startup.usecase.GetCurrentLocalUserUseCase
+import app.productbrain.platform.isDebugBuild
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.map
 class StartupViewModel(
     val startupService: StartupServiceObserver
 ): ViewModel() {
+    private var isTestCompleted = false
     //This Flow is the root startup state
     val viewState: Flow<ViewState> = startupService.startUpState.map { state ->
 
@@ -27,7 +29,9 @@ class StartupViewModel(
                     ViewState.UserOnBoarding
                 } else if(state.currentUser is GetCurrentLocalUserUseCase.Result.UserNotFound)
                     ViewState.CreateProfile
-                else {
+                else if(isDebugBuild() && !isTestCompleted) {
+                    ViewState.Test
+                } else {
                     ViewState.Ready
                 }
             }
@@ -37,8 +41,14 @@ class StartupViewModel(
 
     fun invalidate() = startupService.invalidate()
 
+    fun finishTest() {
+        isTestCompleted = true
+        invalidate()
+    }
+
     sealed interface ViewState {
         object Cold: ViewState
+        object Test: ViewState
         object Ready: ViewState
         object UserOnBoarding: ViewState
         object CreateProfile: ViewState

@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import org.koin.compose.getKoin
 
 @Composable
-fun CreateUserProfileApp(onComplete: () -> Unit) {
+fun CreateUserProfileApp(onCompleted: () -> Unit) {
     val createProfileUseCase = getKoin().get<CreateLocalUserUseCase>()
     val setCurrentUser = getKoin().get<SetCurrentLocalUserUseCase>()
 
@@ -21,7 +21,7 @@ fun CreateUserProfileApp(onComplete: () -> Unit) {
                 setCurrentUser(localUser).getOrNull()
             }.onSuccess { ok ->
                 if(ok is SetCurrentLocalUserUseCase.Result.Ok) {
-                    onComplete()
+                    onCompleted()
                 } else {
                     //TODO: Handle fail case
                 }

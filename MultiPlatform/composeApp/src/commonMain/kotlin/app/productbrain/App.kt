@@ -7,6 +7,7 @@ import app.productbrain.feature.startup.view.StartupApp
 import app.productbrain.feature.startup.view.CreateUserProfileApp
 import app.productbrain.feature.startup.view.UserOnboardingApp
 import app.productbrain.feature.startup.viewmodel.StartupViewModel
+import app.productbrain.test.TestApp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -19,13 +20,18 @@ fun App() {
     when(startState) {
         StartupViewModel.ViewState.Cold -> StartupApp()
         StartupViewModel.ViewState.Ready -> MainApp()
+        StartupViewModel.ViewState.Test -> TestApp(
+            onCompleted = {
+                startupViewModel.finishTest()
+            }
+        )
         StartupViewModel.ViewState.UserOnBoarding -> UserOnboardingApp(
             onCompleted = {
                 startupViewModel.invalidate()
             }
         )
         StartupViewModel.ViewState.CreateProfile -> CreateUserProfileApp(
-            onComplete = {
+            onCompleted = {
                 startupViewModel.invalidate()
             }
         )
