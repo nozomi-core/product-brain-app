@@ -5,5 +5,5 @@ import app.productbrain.feature.startup.service.StartupServiceObserver
 import org.koin.dsl.module
 
 val serviceModule = module {
-    single<StartupServiceObserver> { StartupService(get(), get()) }
+    single<StartupServiceObserver> { StartupService(get()) }
 }
