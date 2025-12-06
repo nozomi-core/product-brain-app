@@ -42,6 +42,5 @@ class StartupViewModel(
         object Ready: ViewState
         object UserOnBoarding: ViewState
         object CreateProfile: ViewState
-
     }
 }

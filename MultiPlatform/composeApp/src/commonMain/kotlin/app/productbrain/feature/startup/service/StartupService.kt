@@ -16,7 +16,7 @@ interface StartupServiceObserver {
 }
 
 class StartupService(
-    private val startupUseCase: StartUpUseCase
+    private val startUpUseCase: StartUpUseCase
 ): StartupServiceObserver {
     private val state = MutableStateFlow<State>(State.Cold)
     override val startUpState: StateFlow<State>
@@ -42,7 +42,7 @@ class StartupService(
         //TODO: Do init step... Fix Global scope, use a supervisor job
         GlobalScope.launch {
             state.update {
-                startupUseCase()
+                startUpUseCase()
             }
         }
     }

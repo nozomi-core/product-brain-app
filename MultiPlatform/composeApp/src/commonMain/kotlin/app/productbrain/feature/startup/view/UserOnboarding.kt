@@ -24,7 +24,7 @@ import app.productbrain.feature.startup.viewmodel.UserOnboardingViewModel.*
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun UserOnboardingRoute(onCompleted: () -> Unit) {
+fun UserOnboardingApp(onCompleted: () -> Unit) {
     val viewModel = koinViewModel<UserOnboardingViewModel>()
     val viewState by viewModel.viewState.collectAsStateWithLifecycle(ViewState.Cold)
 
