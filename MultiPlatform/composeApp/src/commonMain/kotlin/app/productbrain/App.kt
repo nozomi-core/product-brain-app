@@ -2,7 +2,6 @@ package app.productbrain
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.productbrain.feature.NavRoutes
 import app.productbrain.feature.main.view.MainApp
 import app.productbrain.feature.startup.view.StartupApp
 import app.productbrain.feature.startup.view.CreateUserProfileApp

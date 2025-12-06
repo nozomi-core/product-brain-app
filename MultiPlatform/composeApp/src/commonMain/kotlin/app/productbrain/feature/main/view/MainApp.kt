@@ -1,40 +1,49 @@
 package app.productbrain.feature.main.view
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.remember
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import app.productbrain.feature.NavRoutes
+import androidx.navigation.toRoute
+import app.productbrain.feature.NavRoute
+import app.productbrain.feature.Navigator
+import app.productbrain.feature.home.HomeRoute
+import app.productbrain.feature.home.NextRoute
+
+class MainNavigator(val controller: NavController): Navigator {
+    override fun toRoute(route: NavRoute) {
+        controller.navigate(route)
+    }
+}
 
 @Composable
 fun MainApp() {
     MaterialTheme {
         val navController = rememberNavController()
 
+        val navigator = remember(key1 = navController) {
+            MainNavigator(navController)
+        }
+
         NavHost(
             navController = navController,
-            startDestination = NavRoutes.Main
+            startDestination = NavRoute.Home("001")
         ) {
-            composable(route = NavRoutes.Main::class) {
-                Scaffold { paddingValues ->
-                    Column(modifier = Modifier.padding(paddingValues)) {
-                        Text("Hello there")
-                    }
-                }
+            composable(route = NavRoute.Home::class) { entry ->
+                HomeRoute(
+                    entry.toRoute(),
+                    navigator
+                )
             }
 
-            composable(route = NavRoutes.Next::class) {
-                Scaffold { p ->
-                    Column(modifier = Modifier.padding(p)) {
-                        Text("Next")
-                    }
-                }
+            composable(route = NavRoute.Next::class) { entry ->
+                NextRoute(
+                    entry.toRoute(),
+                    navigator
+                )
             }
         }
     }

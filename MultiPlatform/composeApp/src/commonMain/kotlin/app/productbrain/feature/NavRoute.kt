@@ -2,9 +2,9 @@ package app.productbrain.feature
 
 import kotlinx.serialization.Serializable
 
-sealed class NavRoutes {
+sealed class NavRoute {
     @Serializable
-    object Main: NavRoutes()
+    class Home(val id: String): NavRoute()
     @Serializable
-    object Next: NavRoutes()
+    object Next: NavRoute()
 }
