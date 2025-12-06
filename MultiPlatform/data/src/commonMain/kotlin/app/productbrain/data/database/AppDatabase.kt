@@ -4,12 +4,11 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
-import app.productbrain.data.repository.localuser.CurrentLocalUser
-import app.productbrain.data.repository.localuser.CurrentLocalUserEntity
-import app.productbrain.data.repository.settings.SettingEntity
-import app.productbrain.data.repository.settings.SettingsDao
-import app.productbrain.data.repository.localuser.LocalUserDao
-import app.productbrain.data.repository.localuser.LocalUserEntity
+import app.productbrain.data.model.localuser.CurrentLocalUserEntity
+import app.productbrain.data.model.settings.SettingEntity
+import app.productbrain.data.model.settings.SettingsDao
+import app.productbrain.data.model.localuser.LocalUserDao
+import app.productbrain.data.model.localuser.LocalUserEntity
 
 @Database(
     entities =

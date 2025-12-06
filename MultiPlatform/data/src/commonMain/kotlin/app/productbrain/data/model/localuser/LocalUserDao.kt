@@ -1,4 +1,4 @@
-package app.productbrain.data.repository.localuser
+package app.productbrain.data.model.localuser
 
 import androidx.room.Dao
 import androidx.room.Query

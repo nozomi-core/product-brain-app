@@ -18,9 +18,12 @@ import app.productbrain.feature.startup.viewmodel.StartupViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
+import productbrain.composeapp.generated.resources.Res
+import productbrain.composeapp.generated.resources.button_title
 
 @Composable
 @Preview
@@ -56,6 +59,8 @@ fun ColdApp() {
 @Composable
 fun ReadyApp() {
     MaterialTheme {
+        stringResource(Res.string.button_title)
+
         val navController = rememberNavController()
 
         NavHost(

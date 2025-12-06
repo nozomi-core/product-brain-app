@@ -1,8 +1,8 @@
 package app.productbrain.feature.startup.usecase
 
-import app.productbrain.data.repository.localuser.CurrentLocalUser
-import app.productbrain.data.repository.localuser.LocalUserId
-import app.productbrain.data.repository.localuser.LocalUserRepository
+import app.productbrain.data.model.localuser.CurrentLocalUser
+import app.productbrain.data.model.localuser.LocalUserId
+import app.productbrain.data.model.localuser.LocalUserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

@@ -1,7 +1,7 @@
 package app.productbrain.feature.startup.usecase
 
-import app.productbrain.data.repository.settings.SettingItem
-import app.productbrain.data.repository.settings.SettingsRepository
+import app.productbrain.data.model.settings.SettingItem
+import app.productbrain.data.model.settings.SettingsRepository
 
 class IsUserOnBoardedUseCase(
     private val settingsRepository: SettingsRepository

@@ -1,4 +1,4 @@
-package app.productbrain.data.repository.localuser
+package app.productbrain.data.model.localuser
 
 import app.productbrain.data.ClockInstant
 import kotlinx.coroutines.flow.Flow

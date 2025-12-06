@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.productbrain.data.common.CountryCodeTag
 import app.productbrain.data.common.CurrencyCodeTag
-import app.productbrain.data.repository.settings.SettingItem
-import app.productbrain.data.repository.settings.SettingsRepository
+import app.productbrain.data.model.settings.SettingItem
+import app.productbrain.data.model.settings.SettingsRepository
 import app.productbrain.feature.startup.usecase.CompleteOnBoardingUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow

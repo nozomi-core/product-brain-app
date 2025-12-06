@@ -2,11 +2,11 @@ package app.productbrain.feature.startup.service
 
 import app.productbrain.feature.startup.usecase.IsUserOnBoardedUseCase
 import app.productbrain.feature.startup.usecase.GetCurrentLocalUserUseCase
+import app.productbrain.feature.startup.usecase.StartUpUseCase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -16,8 +16,7 @@ interface StartupServiceObserver {
 }
 
 class StartupService(
-    private val doesUserNeedOnboarding: IsUserOnBoardedUseCase,
-    private val getCurrentLocalUserUseCase: GetCurrentLocalUserUseCase
+    private val startupUseCase: StartUpUseCase
 ): StartupServiceObserver {
     private val state = MutableStateFlow<State>(State.Cold)
     override val startUpState: StateFlow<State>
@@ -42,18 +41,11 @@ class StartupService(
     private fun loadState() {
         //TODO: Do init step... Fix Global scope, use a supervisor job
         GlobalScope.launch {
-            val doesUserNeedOnboarding = doesUserNeedOnboarding()
-            val currentUser = getCurrentLocalUserUseCase().first()
-
             state.update {
-                State.StartupComplete(
-                    isOnboarded = doesUserNeedOnboarding,
-                    currentUser = currentUser
-                )
+                startupUseCase()
             }
         }
     }
-
 
     sealed interface State {
         object Cold : State

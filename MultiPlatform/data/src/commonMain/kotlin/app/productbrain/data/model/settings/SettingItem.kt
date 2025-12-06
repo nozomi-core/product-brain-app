@@ -1,4 +1,4 @@
-package app.productbrain.data.repository.settings
+package app.productbrain.data.model.settings
 
 import app.productbrain.data.ClockInstant
 import app.productbrain.data.common.CountryCodeTag

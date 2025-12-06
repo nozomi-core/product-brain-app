@@ -1,4 +1,4 @@
-package app.productbrain.data.repository.settings
+package app.productbrain.data.model.settings
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow

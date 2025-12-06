@@ -3,12 +3,12 @@ package app.productbrain.data.di
 import app.productbrain.data.database.AppDatabase
 import app.productbrain.data.provider.ClockProvider
 import app.productbrain.data.provider.TransactionProvider
-import app.productbrain.data.repository.localuser.LocalUserDao
-import app.productbrain.data.repository.settings.SettingsDao
-import app.productbrain.data.repository.settings.SettingsRepository
-import app.productbrain.data.repository.settings.SettingsRepositoryActual
-import app.productbrain.data.repository.localuser.LocalUserRepository
-import app.productbrain.data.repository.localuser.LocalUserRepositoryActual
+import app.productbrain.data.model.localuser.LocalUserDao
+import app.productbrain.data.model.settings.SettingsDao
+import app.productbrain.data.model.settings.SettingsRepository
+import app.productbrain.data.model.settings.SettingsRepositoryActual
+import app.productbrain.data.model.localuser.LocalUserRepository
+import app.productbrain.data.model.localuser.LocalUserRepositoryActual
 import org.koin.dsl.module
 
 val dataModule = module {

@@ -1,4 +1,4 @@
-package app.productbrain.data.repository.settings
+package app.productbrain.data.model.settings
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

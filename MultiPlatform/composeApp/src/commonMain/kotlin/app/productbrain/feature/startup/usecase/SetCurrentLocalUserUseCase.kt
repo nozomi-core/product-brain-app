@@ -1,8 +1,8 @@
 package app.productbrain.feature.startup.usecase
 
 import app.productbrain.data.lang.Maybe
-import app.productbrain.data.repository.localuser.LocalUser
-import app.productbrain.data.repository.localuser.LocalUserRepository
+import app.productbrain.data.model.localuser.LocalUser
+import app.productbrain.data.model.localuser.LocalUserRepository
 class SetCurrentLocalUserUseCase(
     private val localUserRepository: LocalUserRepository
 ) {
