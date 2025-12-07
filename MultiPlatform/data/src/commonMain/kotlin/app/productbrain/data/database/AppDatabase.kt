@@ -1,28 +1,34 @@
 package app.productbrain.data.database
 
 import androidx.room.ConstructedBy
-import androidx.room.Dao
 import androidx.room.Database
-import androidx.room.Entity
-import androidx.room.Insert
-import androidx.room.PrimaryKey
-import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
-import app.productbrain.data.repository.login.LoginDao
-import app.productbrain.data.repository.login.LoginEntryEntity
-import kotlinx.coroutines.flow.Flow
+import androidx.room.Transactor
+import androidx.room.useWriterConnection
+import app.productbrain.data.model.localuser.CurrentLocalUserEntity
+import app.productbrain.data.model.settings.SettingEntity
+import app.productbrain.data.model.settings.SettingsDao
+import app.productbrain.data.model.localuser.LocalUserDao
+import app.productbrain.data.model.localuser.LocalUserEntity
+import app.productbrain.data.model.vendor.VendorDao
+import app.productbrain.data.model.vendor.VendorEntity
 
 @Database(
     entities =
         [
-            LoginEntryEntity::class
+            SettingEntity::class,
+            LocalUserEntity::class,
+            CurrentLocalUserEntity::class,
+            VendorEntity::class
         ],
     version = 1
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun loginDao(): LoginDao
+    abstract fun settingsDao(): SettingsDao
+    abstract fun localUserDao(): LocalUserDao
+    abstract fun vendorDao(): VendorDao
 }
 
 // The Room compiler generates the `actual` implementations.

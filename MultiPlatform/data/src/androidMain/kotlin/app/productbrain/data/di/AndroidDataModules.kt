@@ -1,7 +1,7 @@
 package app.productbrain.data.di
 
-import app.productbrain.data.lang.AndroidPlatformAssets
-import app.productbrain.data.lang.PlatformAssets
+import app.productbrain.common.AndroidPlatformAssets
+import app.productbrain.common.PlatformAssets
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlin.serialisation)
 }
 
 kotlin {
@@ -43,8 +44,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.navigation)
 
+            //Serialisation
+            implementation(libs.serialization)
+
             //DI
             implementation(libs.koin.core)
+            implementation(libs.koin.view.model)
 
             //Project
             implementation(project(":data"))
@@ -82,6 +87,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 

@@ -1,0 +1,55 @@
+package app.productbrain.feature.main.view
+
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import app.productbrain.feature.NavRoute
+import app.productbrain.feature.Navigator
+import app.productbrain.feature.home.HomeRoute
+import app.productbrain.feature.home.NextRoute
+import app.productbrain.feature.vendor.view.AddVendorRoute
+
+class MainNavigator(val controller: NavController): Navigator {
+    override fun toRoute(route: NavRoute) {
+        controller.navigate(route)
+    }
+}
+
+@Composable
+fun MainApp() {
+    MaterialTheme {
+        val navController = rememberNavController()
+
+        val navigator = remember(key1 = navController) {
+            MainNavigator(navController)
+        }
+
+        NavHost(
+            navController = navController,
+            startDestination = NavRoute.AddVendorRoute
+        ) {
+            composable(route = NavRoute.Home::class) { entry ->
+                HomeRoute(
+                    entry.toRoute(),
+                    navigator
+                )
+            }
+
+            composable(route = NavRoute.Next::class) { entry ->
+                NextRoute(
+                    entry.toRoute(),
+                    navigator
+                )
+            }
+
+            composable(route = NavRoute.AddVendorRoute::class) {
+                AddVendorRoute()
+            }
+        }
+    }
+}
