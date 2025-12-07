@@ -4,7 +4,7 @@ import app.productbrain.common.Ulid
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class VendorId private constructor(
+value class VendorId(
     val value: String
 ) {
     companion object {

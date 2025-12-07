@@ -1,5 +1,9 @@
 package app.productbrain.data.model.productunit
 
+import app.productbrain.data.model.productunit.ProductUnit.Volume.*
+import app.productbrain.data.model.productunit.ProductUnit.Weight.*
+import app.productbrain.data.model.productunit.ProductUnit.Time.*
+
 sealed class ProductUnit(
     val amount: Double,
     val unitName: UnitName
@@ -14,13 +18,22 @@ sealed class ProductUnit(
         class Liter(amount: Double): Volume(amount, UnitName.LITER)
     }
 
+    sealed class Time(amount: Double, unitName: UnitName): ProductUnit(amount, unitName) {
+        class Week(amount: Double): ProductUnit(amount, UnitName.WEEK)
+        class Month(amount: Double): ProductUnit(amount, UnitName.MONTH)
+        class Year(amount: Double): ProductUnit(amount, UnitName.YEAR)
+    }
+
     companion object {
         fun of(amount: Double, name: UnitName): ProductUnit {
             return when(name) {
-                UnitName.GRAM -> Weight.Gram(amount)
-                UnitName.KILO -> Weight.Kilo(amount)
-                UnitName.MILLILITER -> Volume.MilliLiter(amount)
-                UnitName.LITER -> Volume.Liter(amount)
+                UnitName.GRAM -> Gram(amount)
+                UnitName.KILO -> Kilo(amount)
+                UnitName.MILLILITER -> MilliLiter(amount)
+                UnitName.LITER -> Liter(amount)
+                UnitName.WEEK -> Week(amount)
+                UnitName.MONTH -> Month(amount)
+                UnitName.YEAR -> Year(amount)
             }
         }
     }
@@ -35,6 +48,7 @@ sealed class ProductUnit(
 * BASE UNIT DEFINITION
 * Volume = Liter
 * Weight = Kilogram
+* Time = Month
 *
 * so if we take 'grams', the base unit of '1/1000' tells it how to convert to KG
 *
@@ -48,11 +62,17 @@ enum class UnitName(
     val baseUnits: Double
 ) {
     //Weight
-    GRAM(key = "g", 1/1000.0),
-    KILO(key = "kg", 1.0),
+    GRAM("g", 1/1000.0),
+    KILO("kg", 1.0),
 
 
     //Volume
-    MILLILITER(key = "ml", 1/1000.0),
-    LITER(key = "l", 1.0);
+    MILLILITER("ml", 1/1000.0),
+    LITER("l", 1.0),
+
+    //Time
+    WEEK( "week", 12.0/52),
+    MONTH( "month", 1.0),
+    YEAR("year", 12.0)
+    ;
 }

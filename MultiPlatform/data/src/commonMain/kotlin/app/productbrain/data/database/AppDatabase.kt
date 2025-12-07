@@ -4,13 +4,15 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
-import androidx.room.Transactor
-import androidx.room.useWriterConnection
 import app.productbrain.data.model.localuser.CurrentLocalUserEntity
 import app.productbrain.data.model.settings.SettingEntity
 import app.productbrain.data.model.settings.SettingsDao
 import app.productbrain.data.model.localuser.LocalUserDao
 import app.productbrain.data.model.localuser.LocalUserEntity
+import app.productbrain.data.model.productabstract.ProductAbstractDao
+import app.productbrain.data.model.productabstract.ProductAbstractRemoteEntity
+import app.productbrain.data.model.productunit.ProductUnitDao
+import app.productbrain.data.model.productunit.ProductUnitEntity
 import app.productbrain.data.model.vendor.VendorDao
 import app.productbrain.data.model.vendor.VendorEntity
 
@@ -20,7 +22,9 @@ import app.productbrain.data.model.vendor.VendorEntity
             SettingEntity::class,
             LocalUserEntity::class,
             CurrentLocalUserEntity::class,
-            VendorEntity::class
+            VendorEntity::class,
+            ProductUnitEntity::class,
+            ProductAbstractRemoteEntity::class
         ],
     version = 1
 )
@@ -29,6 +33,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun settingsDao(): SettingsDao
     abstract fun localUserDao(): LocalUserDao
     abstract fun vendorDao(): VendorDao
+    abstract fun productUnitDao(): ProductUnitDao
+    abstract fun productAbstractDao(): ProductAbstractDao
 }
 
 // The Room compiler generates the `actual` implementations.

@@ -2,6 +2,7 @@ package app.productbrain.feature.vendor.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -32,12 +33,14 @@ fun AddVendorScreen(
 ) {
     Scaffold(
         bottomBar = {
-            Button(
-                onClick = {
-                    send(Action.SubmitVendor)
+            BottomAppBar {
+                Button(
+                    onClick = {
+                        send(Action.SubmitVendor)
+                    }
+                ) {
+                    Text("Submit")
                 }
-            ) {
-                Text("Submit")
             }
         }
     ) { p ->

@@ -1,7 +1,9 @@
 package app.productbrain.feature.startup.service
 
+import app.productbrain.common.Maybe
 import app.productbrain.feature.startup.usecase.IsUserOnBoardedUseCase
 import app.productbrain.feature.startup.usecase.GetCurrentLocalUserUseCase
+import app.productbrain.feature.startup.usecase.InitDatabaseUseCase
 import app.productbrain.feature.startup.usecase.StartUpUseCase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,7 +54,8 @@ class StartupService(
         object Initialising : State
         data class StartupComplete(
             val isOnboarded: IsUserOnBoardedUseCase.Result,
-            val currentUser: GetCurrentLocalUserUseCase.Result
+            val currentUser: GetCurrentLocalUserUseCase.Result,
+            val dbInitialised: Maybe<InitDatabaseUseCase.Initialised>
         ) : State
     }
 }

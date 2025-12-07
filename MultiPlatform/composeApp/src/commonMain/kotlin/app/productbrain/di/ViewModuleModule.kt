@@ -1,5 +1,6 @@
 package app.productbrain.di
 
+import app.productbrain.feature.home.viewmodel.HomeListActionsViewModel
 import app.productbrain.feature.startup.viewmodel.StartupViewModel
 import app.productbrain.feature.startup.viewmodel.UserOnboardingViewModel
 import app.productbrain.feature.vendor.viewmodel.AddVendorViewModel
@@ -11,6 +12,7 @@ val viewModelModule = module {
     viewModel { StartupViewModel(get()) }
     viewModel { UserOnboardingViewModel(get(), get()) }
     viewModel { AddVendorViewModel(get()) }
+    viewModel { HomeListActionsViewModel() }
 
     //Test
     viewModel { SharedViewModel() }
