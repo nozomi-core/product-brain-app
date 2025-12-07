@@ -1,4 +1,4 @@
-package app.productbrain.data.lang
+package app.productbrain.common
 
 import java.math.BigDecimal
 import java.math.RoundingMode

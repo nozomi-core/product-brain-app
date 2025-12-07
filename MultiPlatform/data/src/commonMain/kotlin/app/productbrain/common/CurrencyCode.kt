@@ -1,4 +1,4 @@
-package app.productbrain.data.common
+package app.productbrain.common
 
 enum class CurrencyCodeTag(
     val code: String

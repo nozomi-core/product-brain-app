@@ -3,7 +3,7 @@ package app.productbrain.di
 import app.productbrain.feature.startup.viewmodel.StartupViewModel
 import app.productbrain.feature.startup.viewmodel.UserOnboardingViewModel
 import app.productbrain.feature.vendor.viewmodel.AddVendorViewModel
-import app.productbrain.test.SharedViewModel
+import app.productbrain.test.view.SharedViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 

@@ -4,6 +4,8 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
+import androidx.room.Transactor
+import androidx.room.useWriterConnection
 import app.productbrain.data.model.localuser.CurrentLocalUserEntity
 import app.productbrain.data.model.settings.SettingEntity
 import app.productbrain.data.model.settings.SettingsDao

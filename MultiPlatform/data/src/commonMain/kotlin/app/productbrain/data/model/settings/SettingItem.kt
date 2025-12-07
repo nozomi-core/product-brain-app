@@ -1,8 +1,8 @@
 package app.productbrain.data.model.settings
 
 import app.productbrain.data.ClockInstant
-import app.productbrain.data.common.CountryCodeTag
-import app.productbrain.data.common.CurrencyCodeTag
+import app.productbrain.common.CountryCodeTag
+import app.productbrain.common.CurrencyCodeTag
 import kotlin.reflect.KClass
 
 sealed class SettingItem<T : Any>(

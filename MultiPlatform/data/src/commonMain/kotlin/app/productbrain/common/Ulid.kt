@@ -1,4 +1,4 @@
-package app.productbrain.data.common
+package app.productbrain.common
 
 import kotlin.jvm.JvmInline
 import kotlin.random.Random

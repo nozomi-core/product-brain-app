@@ -1,4 +1,4 @@
-package app.productbrain.data.lang
+package app.productbrain.common
 
 import kotlinx.serialization.KSerializer
 

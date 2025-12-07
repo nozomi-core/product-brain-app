@@ -1,6 +1,6 @@
 package app.productbrain.feature.startup.usecase
 
-import app.productbrain.data.lang.Maybe
+import app.productbrain.common.Maybe
 import app.productbrain.data.model.localuser.LocalUser
 import app.productbrain.data.model.localuser.LocalUserRepository
 class SetCurrentLocalUserUseCase(

@@ -1,6 +1,6 @@
 package app.productbrain.data.model.vendor
 
-import app.productbrain.data.lang.Maybe
+import app.productbrain.common.Maybe
 
 interface VendorRepository {
     suspend fun upsert(vendor: Vendor): Maybe<Unit>

@@ -1,6 +1,6 @@
 package app.productbrain.data.model.vendor
 
-import app.productbrain.data.common.Ulid
+import app.productbrain.common.Ulid
 import kotlin.jvm.JvmInline
 
 @JvmInline

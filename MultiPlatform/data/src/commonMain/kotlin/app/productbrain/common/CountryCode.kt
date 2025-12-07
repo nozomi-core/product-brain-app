@@ -1,4 +1,4 @@
-package app.productbrain.data.common
+package app.productbrain.common
 
 enum class CountryCodeTag(
     val code: String,

@@ -1,6 +1,6 @@
 package app.productbrain.data.lang
 
-import app.productbrain.data.common.UlidFactory
+import app.productbrain.common.UlidFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

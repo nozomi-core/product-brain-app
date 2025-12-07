@@ -1,6 +1,4 @@
-package app.productbrain.data.common
-
-import app.productbrain.data.lang.BigNumber
+package app.productbrain.common
 
 data class CurrencyAmount(
     val amount: BigNumber,

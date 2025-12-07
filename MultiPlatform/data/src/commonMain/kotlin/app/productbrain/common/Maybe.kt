@@ -1,4 +1,4 @@
-package app.productbrain.data.lang
+package app.productbrain.common
 
 sealed class Maybe<out T> {
     class Value<T>(val value: T): Maybe<T>()

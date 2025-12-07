@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.productbrain.data.common.CountryCodeTag
+import app.productbrain.common.CountryCodeTag
 import app.productbrain.design.effect.ObserveEffect
 import app.productbrain.design.theme.ProTheme
 import app.productbrain.design.theme.ProductTheme

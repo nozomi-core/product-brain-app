@@ -5,9 +5,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.input.KeyboardType
-import app.productbrain.data.common.CurrencyAmount
-import app.productbrain.data.lang.BigNumber
-import app.productbrain.data.lang.Maybe
+import app.productbrain.common.CurrencyAmount
+import app.productbrain.common.BigNumber
+import app.productbrain.common.Maybe
 import app.productbrain.design.lang.InputForm
 
 @Composable

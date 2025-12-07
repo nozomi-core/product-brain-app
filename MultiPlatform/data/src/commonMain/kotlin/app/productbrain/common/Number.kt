@@ -1,4 +1,4 @@
-package app.productbrain.data.lang
+package app.productbrain.common
 
 expect fun numberOf(value: String): Maybe<BigNumber>
 expect fun numberOf(value: Int): BigNumber
