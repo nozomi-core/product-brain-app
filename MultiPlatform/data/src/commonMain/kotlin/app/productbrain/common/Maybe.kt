@@ -11,14 +11,6 @@ sealed class Maybe<out T> {
         return this
     }
 
-    fun getOrDefault(default: @UnsafeVariance T): T {
-        return if(this is Value) {
-            value
-        } else {
-            default
-        }
-    }
-
     fun getOrNull(): T? {
         return if(this is Value) {
             value
@@ -33,21 +25,16 @@ sealed class Maybe<out T> {
                 try {
                     Value(block(value))
                 } catch (e: Exception) {
+                    Forest.e(e)
                     Error(e)
                 }
             }
             is Error -> this
-
         }
     }
 
-     suspend fun <R> pipe(block: suspend (Maybe<T>) -> Maybe<R>): Maybe<R> {
-        return block(this)
-    }
-
-
     companion object {
-        suspend fun <T> tryResult(block: suspend () -> T): Maybe<T> {
+        suspend fun <T> tryMaybe(block: suspend () -> T): Maybe<T> {
             return try {
                 Value(block())
             } catch (e: Exception) {
@@ -55,7 +42,7 @@ sealed class Maybe<out T> {
             }
         }
 
-        fun <T> tryResultBlocking(block: () -> T): Maybe<T> {
+        fun <T> tryMaybeBlocking(block: () -> T): Maybe<T> {
             return try {
                 Value(block())
             } catch (e: Exception) {
@@ -70,5 +57,22 @@ sealed class Maybe<out T> {
                 Value(value)
             }
         }
+    }
+}
+
+suspend fun <T> tryMaybe(block: suspend () -> T) = Maybe.tryMaybe(block)
+
+//Used when chaining a Maybe then function that also returns a Maybe, it needs to be flattened
+suspend fun <T, R> Maybe<Maybe<T>>.unwrap(block: suspend (T) -> R): Maybe<R> {
+    return when (this) {
+        is Maybe.Value -> when (val inner = value) {
+            is Maybe.Value -> try {
+                Maybe.Value(block(inner.value))
+            } catch (e: Exception) {
+                Maybe.Error(e)
+            }
+            is Maybe.Error -> inner
+        }
+        is Maybe.Error -> this
     }
 }

@@ -7,4 +7,6 @@ sealed class NavRoute {
     object HomeListActions: NavRoute()
     @Serializable
     object AddVendorRoute: NavRoute()
+    @Serializable
+    object AddProductNote: NavRoute()
 }

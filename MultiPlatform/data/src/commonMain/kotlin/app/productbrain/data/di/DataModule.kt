@@ -1,6 +1,7 @@
 package app.productbrain.data.di
 
 import app.productbrain.data.database.AppDatabase
+import app.productbrain.data.model.fuzzytextsearch.FuzzyTextSearchEngine
 import app.productbrain.data.provider.ClockProvider
 import app.productbrain.data.provider.TransactionProvider
 import app.productbrain.data.model.localuser.LocalUserDao
@@ -35,7 +36,9 @@ val dataModule = module {
     //Repositories
     factory<SettingsRepository> { SettingsRepositoryActual(get()) }
     factory<LocalUserRepository> { LocalUserRepositoryActual(get()) }
-    factory<VendorRepository> { VendorRepositoryActual(get()) }
+    factory<VendorRepository> { VendorRepositoryActual(get(), get()) }
     factory<ProductUnitRepository> { ProductUnitRepositoryActual(get()) }
     factory<ProductAbstractRepository> { ProductAbstractRepositoryActual(get()) }
+
+    factory<FuzzyTextSearchEngine> { FuzzyTextSearchEngine(get()) }
 }

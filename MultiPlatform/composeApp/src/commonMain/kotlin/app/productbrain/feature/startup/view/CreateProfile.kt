@@ -3,6 +3,7 @@ package app.productbrain.feature.startup.view
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import app.productbrain.common.unwrap
 import app.productbrain.feature.startup.usecase.CreateLocalUserUseCase
 import app.productbrain.feature.startup.usecase.SetCurrentLocalUserUseCase
 import kotlinx.coroutines.Dispatchers
@@ -16,18 +17,21 @@ fun CreateUserProfileApp(onCompleted: () -> Unit) {
     val setCurrentUser = getKoin().get<SetCurrentLocalUserUseCase>()
 
     LaunchedEffect(Unit) {
+
+
         withContext(Dispatchers.IO) {
-            createProfileUseCase().then { localUser ->
-                setCurrentUser(localUser).getOrNull()
-            }.onSuccess { ok ->
-                if(ok is SetCurrentLocalUserUseCase.Result.Ok) {
-                    onCompleted()
-                } else {
-                    //TODO: Handle fail case
-                }
+            createProfileUseCase()
+                .then(setCurrentUser::invoke)
+                .unwrap { it }
+        }.onSuccess { result ->
+            if (result is SetCurrentLocalUserUseCase.Result.Ok) {
+                onCompleted()
+            } else {
+                //TODO: Handle fail case
             }
         }
     }
+
 
     Text("Create profile")
 }

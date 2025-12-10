@@ -8,12 +8,9 @@ class InitDatabaseUseCase(
     private val transactionProvider: TransactionProvider,
     private val productUnitRepository: ProductUnitRepository
 ) {
-    suspend operator fun invoke(): Maybe<Initialised> = Maybe.tryResult {
-        transactionProvider.withTransaction {
-            productUnitRepository.setup()
-        }
+    suspend operator fun invoke(): Maybe<Initialised> = transactionProvider.tryTransaction {
+        productUnitRepository.setup()
         Initialised
     }
-
     object Initialised
 }

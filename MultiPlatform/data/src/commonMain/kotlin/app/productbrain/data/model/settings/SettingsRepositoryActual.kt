@@ -29,8 +29,9 @@ internal class SettingsRepositoryActual(
             Long::class    -> stored.toLong()
             CountryCodeTag::class -> CountryCodeTag.findByCode(entity.value) ?: key.defaultValue
             CurrencyCodeTag::class -> CurrencyCodeTag.findByCode(entity.value) ?: key.defaultValue
+            LanguageCodeTag::class -> LanguageCodeTag.findByCode(entity.value) ?: key.defaultValue
             ClockInstant::class -> ClockInstant(stored.toLong())
-            else -> throw IllegalStateException("Unsupported type")
+            else -> throw IllegalStateException("Unable to parse setting '${entity.value}'")
         }
 
         return value as T

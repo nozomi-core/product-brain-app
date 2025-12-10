@@ -9,5 +9,6 @@ class HomeListActionsViewModel: ViewModel() {
 enum class ActionList(
     val title: String
 ) {
-    ADD_VENDOR("Add Vendor")
+    ADD_VENDOR("Add Vendor"),
+    ADD_PRODUCT_NOTE("Add Product Note")
 }

@@ -12,7 +12,7 @@ class CreateLocalUserUseCase(
     private val clockProvider: ClockProvider
 ) {
     suspend operator fun invoke(): Maybe<LocalUser> {
-        return Maybe.tryResult {
+        return Maybe.tryMaybe {
             val localUser = LocalUser(
                 userId = LocalUserId(UlidFactory.create().value),
                 createdAt = clockProvider.now()

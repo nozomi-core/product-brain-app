@@ -8,7 +8,7 @@ class SetCurrentLocalUserUseCase(
 ) {
 
     suspend operator fun invoke(user: LocalUser): Maybe<Result> {
-        return Maybe.tryResult {
+        return Maybe.tryMaybe {
             localUserRepository.setCurrentLocalUser(user)
             Result.Ok
         }
