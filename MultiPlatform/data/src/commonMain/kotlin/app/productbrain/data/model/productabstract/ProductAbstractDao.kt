@@ -7,5 +7,5 @@ import androidx.room.Upsert
 interface ProductAbstractDao {
 
     @Upsert
-    suspend fun upsert(entityRemote: ProductAbstractRemoteEntity)
+    suspend fun upsert(entityRemote: RemoteProductAbstractEntity)
 }

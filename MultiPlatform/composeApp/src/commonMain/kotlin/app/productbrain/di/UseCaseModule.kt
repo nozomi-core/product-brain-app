@@ -16,5 +16,5 @@ val useCaseModule = module {
     factory { IsUserOnBoardedUseCase(get()) }
     factory { SetCurrentLocalUserUseCase(get()) }
     factory { StartUpUseCase(get(), get(), get()) }
-    factory { InitDatabaseUseCase(get(), get()) }
+    factory { InitDatabaseUseCase(get(), get(), get()) }
 }
