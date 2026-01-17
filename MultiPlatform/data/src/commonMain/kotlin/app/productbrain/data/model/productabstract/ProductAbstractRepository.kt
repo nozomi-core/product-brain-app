@@ -2,11 +2,9 @@ package app.productbrain.data.model.productabstract
 
 import app.productbrain.common.Maybe
 import app.productbrain.common.tryMaybe
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 
 interface ProductAbstractRepository {
-    suspend fun upsert(remote: RemoteProductAbstract): Maybe<Unit>
+    suspend fun upsert(remote: ProductAbstract): Maybe<Unit>
     suspend fun getRemoteProductList(): Maybe<RemoteAbstractProductList>
     suspend fun syncRemoteProductList(): Maybe<Unit>
 }
@@ -14,8 +12,8 @@ interface ProductAbstractRepository {
 class ProductAbstractRepositoryActual(
     private val productAbstractDao: ProductAbstractDao
 ): ProductAbstractRepository {
-    override suspend fun upsert(remote: RemoteProductAbstract) = Maybe.tryMaybe {
-        productAbstractDao.upsert(ProductMapper.toRemoteEntity(remote))
+    override suspend fun upsert(remote: ProductAbstract) = Maybe.tryMaybe {
+        productAbstractDao.upsert(ProductAbstractMapper.toRemoteEntity(remote))
     }
 
     override suspend fun getRemoteProductList(): Maybe<RemoteAbstractProductList> {
@@ -26,7 +24,7 @@ class ProductAbstractRepositoryActual(
     override suspend fun syncRemoteProductList(): Maybe<Unit> {
         return tryMaybe {
             allProducts.build().products.forEach {
-                val entity = ProductMapper.toRemoteEntity(it)
+                val entity = ProductAbstractMapper.toRemoteEntity(it)
                 productAbstractDao.upsert(entity)
             }
         }

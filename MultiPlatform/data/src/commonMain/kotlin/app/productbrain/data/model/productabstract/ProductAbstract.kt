@@ -1,16 +1,21 @@
 package app.productbrain.data.model.productabstract
 
 import app.productbrain.data.model.productunit.UnitName
-import app.productbrain.data.model.productunit.UnitSystem
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class RemoteProductAbstractId(
+value class ProductAbstractLocalId(
     val value: String
 )
 
-data class RemoteProductAbstract(
-    val id: RemoteProductAbstractId,
+@JvmInline
+value class ProductAbstractRemoteId(
+    val value: String
+)
+
+data class ProductAbstract(
+    val localId: ProductAbstractLocalId,
+    val remoteId: ProductAbstractRemoteId,
     val name: String,
     val units: List<UnitName>,
     val alias: List<String>

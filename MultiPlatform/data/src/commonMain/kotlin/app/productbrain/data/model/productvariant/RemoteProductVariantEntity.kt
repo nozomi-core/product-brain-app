@@ -1,15 +1,16 @@
-package app.productbrain.data.model.productabstract
+package app.productbrain.data.model.productvariant
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import app.productbrain.data.model.productabstract.ProductAbstractEntity
 
 @Entity(
     tableName = "remote_product_variant",
     foreignKeys = [
         ForeignKey(
-            entity = RemoteProductAbstractEntity::class,
+            entity = ProductAbstractEntity::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("product_abstract_id"),
             onDelete = ForeignKey.NO_ACTION,

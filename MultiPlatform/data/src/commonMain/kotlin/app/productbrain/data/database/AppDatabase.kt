@@ -11,7 +11,7 @@ import app.productbrain.data.model.settings.SettingsDao
 import app.productbrain.data.model.localuser.LocalUserDao
 import app.productbrain.data.model.localuser.LocalUserEntity
 import app.productbrain.data.model.productabstract.ProductAbstractDao
-import app.productbrain.data.model.productabstract.RemoteProductAbstractEntity
+import app.productbrain.data.model.productabstract.ProductAbstractEntity
 import app.productbrain.data.model.productunit.ProductUnitDao
 import app.productbrain.data.model.productunit.ProductUnitEntity
 import app.productbrain.data.model.vendor.RemoteVendorAliasEntity
@@ -27,7 +27,7 @@ import app.productbrain.data.model.vendor.RemoteVendorEntity
             RemoteVendorEntity::class,
             RemoteVendorAliasEntity::class,
             ProductUnitEntity::class,
-            RemoteProductAbstractEntity::class
+            ProductAbstractEntity::class
         ],
     version = 1
 )

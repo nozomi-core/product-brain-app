@@ -4,10 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "remote_product_abstract")
-data class RemoteProductAbstractEntity(
-    @ColumnInfo("id") @PrimaryKey
-    val id: String,
+@Entity(tableName = "product_abstract")
+data class ProductAbstractEntity(
+    @ColumnInfo("localId") @PrimaryKey
+    val localId: String,
+    @ColumnInfo("remoteId")
+    val remoteId: String?,
     @ColumnInfo("name")
     val name: String,
     @ColumnInfo("units")
