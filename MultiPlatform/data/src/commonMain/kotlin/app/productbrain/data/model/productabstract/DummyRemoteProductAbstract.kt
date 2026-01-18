@@ -1,5 +1,7 @@
 package app.productbrain.data.model.productabstract
 
+import app.productbrain.common.RemoteId
+import app.productbrain.common.UlidFactory
 import app.productbrain.data.model.productunit.UnitName
 import app.productbrain.data.model.productvariant.RemoteProductVariant
 
@@ -116,7 +118,8 @@ class ProductListBuilder {
     fun build(): BuiltProducts {
         val mapping = productList.map { product ->
             val abstractProduct = ProductAbstract(
-                remoteId = ProductAbstractLocalId(product.rawRemoteId!!),
+                remoteId = RemoteId.Bound(ProductAbstractRemoteId(product.rawRemoteId!!)),
+                localId = ProductAbstractLocalId.create(),
                 name = product.name!!,
                 units = product.units!!,
                 alias = product.alias ?: listOf()
