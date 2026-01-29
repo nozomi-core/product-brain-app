@@ -16,6 +16,9 @@ import app.productbrain.data.model.productabstract.ProductAbstractRepositoryActu
 import app.productbrain.data.model.productunit.ProductUnitDao
 import app.productbrain.data.model.productunit.ProductUnitRepository
 import app.productbrain.data.model.productunit.ProductUnitRepositoryActual
+import app.productbrain.data.model.productvariant.ProductVariantDao
+import app.productbrain.data.model.productvariant.ProductVariantRepository
+import app.productbrain.data.model.productvariant.ProductVariantRepositoryActual
 import app.productbrain.data.model.vendor.VendorDao
 import app.productbrain.data.model.vendor.VendorRepository
 import app.productbrain.data.model.vendor.VendorRepositoryActual
@@ -32,6 +35,7 @@ val dataModule = module {
     single<VendorDao> { get<AppDatabase>().vendorDao() }
     single<ProductUnitDao> { get<AppDatabase>().productUnitDao() }
     single<ProductAbstractDao> { get<AppDatabase>().productAbstractDao() }
+    single<ProductVariantDao> { get<AppDatabase>().productVariantDao() }
 
     //Repositories
     factory<SettingsRepository> { SettingsRepositoryActual(get()) }
@@ -39,6 +43,7 @@ val dataModule = module {
     factory<VendorRepository> { VendorRepositoryActual(get(), get()) }
     factory<ProductUnitRepository> { ProductUnitRepositoryActual(get()) }
     factory<ProductAbstractRepository> { ProductAbstractRepositoryActual(get()) }
+    factory<ProductVariantRepository> { ProductVariantRepositoryActual(get()) }
 
     factory<FuzzyTextSearchEngine> { FuzzyTextSearchEngine(get()) }
 }

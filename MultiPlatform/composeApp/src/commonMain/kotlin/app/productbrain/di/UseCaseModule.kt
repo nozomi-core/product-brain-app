@@ -1,5 +1,6 @@
 package app.productbrain.di
 
+import app.productbrain.feature.product.usecase.AddProductUseCase
 import app.productbrain.feature.startup.usecase.CompleteOnBoardingUseCase
 import app.productbrain.feature.startup.usecase.CreateLocalUserUseCase
 import app.productbrain.feature.startup.usecase.IsUserOnBoardedUseCase
@@ -17,4 +18,5 @@ val useCaseModule = module {
     factory { SetCurrentLocalUserUseCase(get()) }
     factory { StartUpUseCase(get(), get(), get()) }
     factory { InitDatabaseUseCase(get(), get(), get()) }
+    factory { AddProductUseCase(get(), get(), get()) }
 }

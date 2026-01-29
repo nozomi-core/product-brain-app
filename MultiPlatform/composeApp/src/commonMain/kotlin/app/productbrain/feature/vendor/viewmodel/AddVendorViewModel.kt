@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class AddVendorViewModel(
     private val vendorRepository: VendorRepository
 ): ViewModel() {
-    private val _state = MutableStateFlow<State>(State())
+    private val _state = MutableStateFlow<ViewState>(ViewState())
     val state = _state.asStateFlow()
 
     init {
@@ -66,7 +66,7 @@ class AddVendorViewModel(
         )
     }
 
-    data class State(
+    data class ViewState(
         val vendor: RemoteVendor? = null
     )
 

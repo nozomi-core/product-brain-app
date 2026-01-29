@@ -12,12 +12,20 @@ value class ProductAbstractLocalId(
     companion object {
         fun create(): ProductAbstractLocalId = ProductAbstractLocalId("LOC${UlidFactory.create().value}")
     }
+
+    override fun toString(): String {
+        return value
+    }
 }
 
 @JvmInline
 value class ProductAbstractRemoteId(
     val value: String
-)
+) {
+    override fun toString(): String {
+        return value
+    }
+}
 
 data class ProductAbstract(
     val localId: ProductAbstractLocalId,

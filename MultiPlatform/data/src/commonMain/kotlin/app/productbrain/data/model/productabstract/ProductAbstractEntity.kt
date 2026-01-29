@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "product_abstract")
 data class ProductAbstractEntity(
-    @ColumnInfo("localId") @PrimaryKey
+    @ColumnInfo("local_id") @PrimaryKey
     val localId: String,
-    @ColumnInfo("remoteId")
+    @ColumnInfo("remote_id")
     val remoteId: String?,
     @ColumnInfo("name")
     val name: String,

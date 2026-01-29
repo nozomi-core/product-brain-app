@@ -38,6 +38,7 @@ sealed class Maybe<out T> {
             return try {
                 Value(block())
             } catch (e: Exception) {
+                e.printStackTrace() //TODO: Need this?? Use Timber
                 Error(e)
             }
         }
@@ -69,6 +70,7 @@ suspend fun <T, R> Maybe<Maybe<T>>.unwrap(block: suspend (T) -> R): Maybe<R> {
             is Maybe.Value -> try {
                 Maybe.Value(block(inner.value))
             } catch (e: Exception) {
+                e.printStackTrace() //TODO: Need this?? Use Timber
                 Maybe.Error(e)
             }
             is Maybe.Error -> inner

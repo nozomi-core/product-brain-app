@@ -10,5 +10,6 @@ enum class ActionList(
     val title: String
 ) {
     ADD_VENDOR("Add Vendor"),
-    ADD_PRODUCT_NOTE("Add Product Note")
+    ADD_PRODUCT_NOTE("Add Product Note"),
+    ADD_PRODUCT("Add Product")
 }

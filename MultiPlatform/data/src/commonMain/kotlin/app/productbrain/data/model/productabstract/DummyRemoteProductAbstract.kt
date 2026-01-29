@@ -1,9 +1,10 @@
 package app.productbrain.data.model.productabstract
 
 import app.productbrain.common.RemoteId
-import app.productbrain.common.UlidFactory
 import app.productbrain.data.model.productunit.UnitName
-import app.productbrain.data.model.productvariant.RemoteProductVariant
+import app.productbrain.data.model.productvariant.ProductVariant
+import app.productbrain.data.model.productvariant.ProductVariantLocalId
+import app.productbrain.data.model.productvariant.ProductVariantRemoteId
 
 val allProducts = buildProducts {
     product {
@@ -12,16 +13,19 @@ val allProducts = buildProducts {
         units = listOf(UnitName.KILO)
 
         variant {
+            id("01KF7GTPC2QD6F6KG8T1QDSRQ5")
             name = "Pink Lady Apple"
             alias = listOf("Pink Lady")
         }
 
         variant {
+            id("01KF7GTZK1JMTKVAY7J3ZW2HCF")
             name = "Granny Smith Apple"
             alias = listOf("Granny Smith")
         }
 
         variant {
+            id("01KF7GV9CM0DGGJ6HN3WVENEFF")
             name = "Royal Gala Apple"
             alias = listOf("Royal Gala")
         }
@@ -54,18 +58,22 @@ val allProducts = buildProducts {
         units = listOf(UnitName.LITER)
 
         variant {
+            id("01KF7GVNVAB6WSQ024PWCMDSAZ")
             name = "Apple Juice"
         }
 
         variant {
+            id("01KF7GVXJTKNRT7Q32WHMGHYVF")
             name = "Orange Juice"
         }
 
         variant {
+            id("01KF7GW61HAWA7KCA90PAQ6W8K")
             name = "Breakfast Juice"
         }
 
         variant {
+            id("01KF7GWDDTBTM0G0G4DXYT7YP7")
             name = "Fruit Juice"
         }
     }
@@ -76,10 +84,12 @@ val allProducts = buildProducts {
         units = listOf(UnitName.LITER)
 
         variant {
+            id("01KF7GWJ619A1QYHF9H9T7VK84")
              name = "Almond Milk"
         }
 
         variant {
+            id("01KF7GWR371QY0GXZNRSWH8QVG")
             name = "Full Cream Milk"
         }
     }
@@ -97,10 +107,12 @@ val allProducts = buildProducts {
         units = listOf(UnitName.ROLL_REGULAR)
 
         variant {
+            id("01KF7GWY2SYG0ZMYSWM14DFZC8")
             name = "Toilet Paper 2ply"
         }
 
         variant {
+            id("01KF7GX3J8MTKN6H2TPTVZXC5D")
             name = "Toilet Paper 3ply"
         }
     }
@@ -119,14 +131,21 @@ class ProductListBuilder {
         val mapping = productList.map { product ->
             val abstractProduct = ProductAbstract(
                 remoteId = RemoteId.Bound(ProductAbstractRemoteId(product.rawRemoteId!!)),
-                localId = ProductAbstractLocalId.create(),
+                localId = ProductAbstractLocalId(product.rawRemoteId!!),
                 name = product.name!!,
                 units = product.units!!,
                 alias = product.alias ?: listOf()
             )
 
             val variants = product.variantList.map { variant ->
-                RemoteProductVariant()
+                ProductVariant(
+                    localId = ProductVariantLocalId(variant.remoteIdRaw!!),
+                    remoteId = RemoteId.Bound(ProductVariantRemoteId(variant.remoteIdRaw!!)),
+                    parentProductId = abstractProduct.localId,
+                    name = variant.name!!,
+                    parent = abstractProduct,
+                    isDefaultVariant = false
+                )
             }
 
             Pair(abstractProduct, variants)
@@ -149,7 +168,7 @@ class ProductListBuilder {
 
 class BuiltProducts(
     val products: List<ProductAbstract>,
-    val variants: List<RemoteProductVariant>
+    val variants: List<ProductVariant>
 )
 
 
@@ -175,6 +194,11 @@ class ProductBuilder() {
 class VariantBuilder() {
     var name: String? = null
     var alias: List<String>? = null
+    var remoteIdRaw: String? = null
+
+    fun id(ulid: String) {
+        remoteIdRaw = "REM${ulid}"
+    }
 }
 
 fun buildProducts(builder: ProductListBuilder.() -> Unit): ProductListBuilder {

@@ -28,7 +28,7 @@ fun AddVendorRoute() {
 
 @Composable
 fun AddVendorScreen(
-    state: State,
+    state: ViewState,
     send: (Action) -> Unit
 ) {
     Scaffold(

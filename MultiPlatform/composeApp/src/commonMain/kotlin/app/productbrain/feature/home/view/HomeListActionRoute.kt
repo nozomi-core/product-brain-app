@@ -30,6 +30,7 @@ fun HomeListActionRoute(
                         when(entry) {
                             ActionList.ADD_VENDOR -> navigator.toRoute(NavRoute.AddVendorRoute)
                             ActionList.ADD_PRODUCT_NOTE -> navigator.toRoute(NavRoute.AddProductNote)
+                            ActionList.ADD_PRODUCT -> navigator.toRoute(NavRoute.AddProduct)
                         }
                      }
                 ) {

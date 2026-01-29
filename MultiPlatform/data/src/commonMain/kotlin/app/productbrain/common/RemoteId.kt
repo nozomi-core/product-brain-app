@@ -1,6 +1,6 @@
 package app.productbrain.common
 
-sealed class RemoteId<T> {
+sealed class RemoteId<out T> {
     data class Bound<T>(val id: T): RemoteId<T>()
     object NoBinding: RemoteId<Nothing>()
 

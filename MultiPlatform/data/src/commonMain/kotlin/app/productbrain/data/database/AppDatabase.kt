@@ -14,6 +14,8 @@ import app.productbrain.data.model.productabstract.ProductAbstractDao
 import app.productbrain.data.model.productabstract.ProductAbstractEntity
 import app.productbrain.data.model.productunit.ProductUnitDao
 import app.productbrain.data.model.productunit.ProductUnitEntity
+import app.productbrain.data.model.productvariant.ProductVariantDao
+import app.productbrain.data.model.productvariant.ProductVariantEntity
 import app.productbrain.data.model.vendor.RemoteVendorAliasEntity
 import app.productbrain.data.model.vendor.VendorDao
 import app.productbrain.data.model.vendor.RemoteVendorEntity
@@ -27,7 +29,8 @@ import app.productbrain.data.model.vendor.RemoteVendorEntity
             RemoteVendorEntity::class,
             RemoteVendorAliasEntity::class,
             ProductUnitEntity::class,
-            ProductAbstractEntity::class
+            ProductAbstractEntity::class,
+            ProductVariantEntity::class
         ],
     version = 1
 )
@@ -39,6 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun vendorDao(): VendorDao
     abstract fun productUnitDao(): ProductUnitDao
     abstract fun productAbstractDao(): ProductAbstractDao
+    abstract fun productVariantDao(): ProductVariantDao
 }
 
 // The Room compiler generates the `actual` implementations.

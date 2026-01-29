@@ -17,16 +17,16 @@ class AddProductNoteViewModel(
     private val vendorRepository: VendorRepository,
     private val fuzzyTextSearchEngine: FuzzyTextSearchEngine
 ): ViewModel() {
-    private val _state = MutableStateFlow<State>(State())
-    val state = _state.asStateFlow()
+    private val _viewState = MutableStateFlow<ViewState>(ViewState())
+    val state = _viewState.asStateFlow()
 
-    data class State(
+    data class ViewState(
         val vendorName: String = "",
         val note: String = ""
     )
 
     fun updateVendor(name: String) {
-        _state.update {
+        _viewState.update {
             it.copy(
                 vendorName = name.normalise()
             )
@@ -34,7 +34,7 @@ class AddProductNoteViewModel(
     }
 
     fun updateNote(note: String) {
-        _state.update {
+        _viewState.update {
             it.copy(
                 note = note.normalise()
             )
@@ -58,7 +58,7 @@ class AddProductNoteViewModel(
     }
 
     suspend fun fuzzySearchVendors(vendors: VendorList): RemoteVendor? {
-        val search = _state.value.vendorName
+        val search = _viewState.value.vendorName
 
         return fuzzyTextSearchEngine.prepare(vendors.vendors, ::vendorSearchMatcher)
             .search(search)
@@ -69,6 +69,5 @@ class AddProductNoteViewModel(
         add(vendor.name)
         addAll(vendor.alias)
     }
-
 }
 

@@ -43,9 +43,8 @@ sealed class ProductUnit(
         class Regular(amount: Double): ProductUnit(amount, UnitName.ROLL_REGULAR)
     }
 
-    sealed class Item(amount: Double, unitName: UnitName): ProductUnit(amount, unitName) {
-        class Single(amount: Double): ProductUnit(amount, UnitName.ITEM)
-    }
+    class Qty(amount: Double): ProductUnit(amount, UnitName.QTY)
+
     companion object {
         fun of(amount: Double, name: UnitName): ProductUnit {
             return when(name) {
@@ -63,7 +62,7 @@ sealed class ProductUnit(
                 UnitName.CENTI_METER -> CentiMeter(amount)
                 UnitName.METER -> Meter(amount)
                 UnitName.ROLL_REGULAR -> Regular(amount)
-                UnitName.ITEM -> Item.Single(amount)
+                UnitName.QTY -> Qty(amount)
             }
         }
     }
@@ -119,7 +118,7 @@ enum class UnitName(
     //Roll
     ROLL_REGULAR(UnitSystem.ROLL, "roll_regular", 1.0),
 
-    ITEM(UnitSystem.ITEM, "item", 1.0)
+    QTY(UnitSystem.QTY, "qty", 1.0)
 
     ;
 }
@@ -131,5 +130,5 @@ enum class UnitSystem {
     LENGTH,
     CUP,
     ROLL,
-    ITEM
+    QTY
 }
