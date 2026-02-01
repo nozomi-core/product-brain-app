@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.productbrain.common.CountryCodeTag
 import app.productbrain.common.CurrencyCodeTag
+import app.productbrain.common.LanguageCodeTag
 import app.productbrain.data.model.settings.SettingItem
 import app.productbrain.data.model.settings.SettingsRepository
 import app.productbrain.feature.startup.usecase.CompleteOnBoardingUseCase
@@ -44,10 +45,12 @@ class UserOnboardingViewModel(
         }
     }
 
+    //TODO: Remove once settings can be user set
     private fun doSetDefault() {
         viewModelScope.launch {
             settingsRepository.set(SettingItem.CurrencyCode, CurrencyCodeTag.AUD)
             settingsRepository.set(SettingItem.CountryCode, CountryCodeTag.AU)
+            settingsRepository.set(SettingItem.LanguageCode, LanguageCodeTag.EN)
         }
     }
 

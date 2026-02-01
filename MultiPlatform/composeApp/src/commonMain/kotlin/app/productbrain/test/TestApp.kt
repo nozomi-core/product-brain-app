@@ -2,6 +2,7 @@ package app.productbrain.test
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -15,12 +16,14 @@ fun TestApp(onCompleted: () -> Unit) {
     MaterialTheme {
         Scaffold(
             bottomBar = {
-                Button(
-                    onClick = {
-                        onCompleted()
+                BottomAppBar {
+                    Button(
+                        onClick = {
+                            onCompleted()
+                        }
+                    ) {
+                        Text("Finish Test")
                     }
-                ) {
-                    Text("Finish Test")
                 }
             }
         ) { p ->

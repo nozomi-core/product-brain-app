@@ -2,9 +2,10 @@ package app.productbrain.feature.vendor.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.productbrain.data.model.vendor.Vendor
-import app.productbrain.data.model.vendor.VendorId
+import app.productbrain.data.model.vendor.RemoteVendor
+import app.productbrain.data.model.vendor.RemoteVendorId
 import app.productbrain.data.model.vendor.VendorRepository
+import app.productbrain.extensions.normalise
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 class AddVendorViewModel(
     private val vendorRepository: VendorRepository
 ): ViewModel() {
-    private val _state = MutableStateFlow<State>(State())
+    private val _state = MutableStateFlow<ViewState>(ViewState())
     val state = _state.asStateFlow()
 
     init {
@@ -30,7 +31,7 @@ class AddVendorViewModel(
                 _state.update { state ->
                     state.copy(
                         vendor = state.vendor?.copy(
-                            name = action.value
+                            name = action.value.normalise()
                         )
                     )
                 }
@@ -55,15 +56,18 @@ class AddVendorViewModel(
         }
     }
 
-    private fun createEmptyVendor(): Vendor {
-        return Vendor(
-            id = VendorId.create(),
-            name = ""
+    private fun createEmptyVendor(): RemoteVendor {
+        return RemoteVendor(
+            id = RemoteVendorId.create(),
+            name = "",
+            alias = listOf(
+                "MyAlias"
+            )
         )
     }
 
-    data class State(
-        val vendor: Vendor? = null
+    data class ViewState(
+        val vendor: RemoteVendor? = null
     )
 
     sealed interface Action {

@@ -7,11 +7,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import app.productbrain.feature.NavRoute
 import app.productbrain.feature.Navigator
-import app.productbrain.feature.home.HomeRoute
-import app.productbrain.feature.home.NextRoute
+import app.productbrain.feature.home.view.HomeListActionRoute
+import app.productbrain.feature.product.view.AddProductNoteRoute
+import app.productbrain.feature.product.view.AddProductRoute
 import app.productbrain.feature.vendor.view.AddVendorRoute
 
 class MainNavigator(val controller: NavController): Navigator {
@@ -31,24 +31,23 @@ fun MainApp() {
 
         NavHost(
             navController = navController,
-            startDestination = NavRoute.AddVendorRoute
+            startDestination = NavRoute.HomeListActions
         ) {
-            composable(route = NavRoute.Home::class) { entry ->
-                HomeRoute(
-                    entry.toRoute(),
-                    navigator
-                )
-            }
-
-            composable(route = NavRoute.Next::class) { entry ->
-                NextRoute(
-                    entry.toRoute(),
+            composable(route = NavRoute.HomeListActions::class) {
+                HomeListActionRoute(
                     navigator
                 )
             }
 
             composable(route = NavRoute.AddVendorRoute::class) {
                 AddVendorRoute()
+            }
+
+            composable(route = NavRoute.AddProductNote::class) {
+                AddProductNoteRoute()
+            }
+            composable(route = NavRoute.AddProduct::class) {
+                AddProductRoute()
             }
         }
     }

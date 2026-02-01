@@ -7,6 +7,7 @@ enum class CountryCodeTag(
     AU("AU", "Australia"),
     US("US", "United Stated"),
     CA("CA", "Canada");
+
     companion object {
         fun findByCode(code: String): CountryCodeTag? = entries.find { it.code == code }
     }

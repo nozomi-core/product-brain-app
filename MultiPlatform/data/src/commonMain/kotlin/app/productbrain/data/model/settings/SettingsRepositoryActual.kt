@@ -3,6 +3,7 @@ package app.productbrain.data.model.settings
 import app.productbrain.data.ClockInstant
 import app.productbrain.common.CountryCodeTag
 import app.productbrain.common.CurrencyCodeTag
+import app.productbrain.common.LanguageCodeTag
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -28,8 +29,9 @@ internal class SettingsRepositoryActual(
             Long::class    -> stored.toLong()
             CountryCodeTag::class -> CountryCodeTag.findByCode(entity.value) ?: key.defaultValue
             CurrencyCodeTag::class -> CurrencyCodeTag.findByCode(entity.value) ?: key.defaultValue
+            LanguageCodeTag::class -> LanguageCodeTag.findByCode(entity.value) ?: key.defaultValue
             ClockInstant::class -> ClockInstant(stored.toLong())
-            else -> throw IllegalStateException("Unsupported type")
+            else -> throw IllegalStateException("Unable to parse setting '${entity.value}'")
         }
 
         return value as T
@@ -44,6 +46,7 @@ internal class SettingsRepositoryActual(
             is Long  -> value.toString()
             is CountryCodeTag -> value.code
             is CurrencyCodeTag -> value.code
+            is LanguageCodeTag -> value.code
             is ClockInstant -> value.utcMillis.toString()
             else -> throw IllegalStateException("Unsupported type")
         }

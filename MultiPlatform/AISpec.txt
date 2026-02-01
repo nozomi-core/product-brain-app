@@ -1,0 +1,36 @@
+To All AI agents and LLM's the following is the specification of the coding
+standards that should be used when generating boiler plate and code snippets.
+Please use this at all times unless otherwise stated.
+
+- Introduction
+The document contains a list of software components and there specifications on how
+to generate a software component. The format of this document is that all sub headers use '-' to
+denote a new category.
+
+- Code Comments
+Please don't add any code comments in any generated code, I will add any myself
+
+- UI Framework
+We use Compose UI framework
+
+- Compose destinations
+Each navigable top level screen should have postfix 'Route', eg for a home scree the Compose name
+is HomeRoute.
+
+- ViewModels
+1. Each view model contains a 'private val _viewState = MutableStateFlow<ViewState>(ViewState())'
+Which is defined in an inner class in view model with the public version 'val state = _viewState.asStateFlow()'.
+Also the ViewState is an data class
+
+- ViewModel and Route naming
+The view model and route naming should share the same common prefix. eg, if I ask you to
+generate a 'ProductDetails' page, the route should be 'ProductDetailsRoute' and 'ProductDetailsViewModel'
+they both have shared X prefix.
+
+- Screen Command
+If I ask you to create a new 'Screen', you should generate the ViewModel and Route boiler plate as
+defined in the specifications
+
+- Software Architecture
+The project uses MVVM View models with repositories injected via Koin DI
+

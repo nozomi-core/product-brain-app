@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 actual fun numberOf(value: String): Maybe<BigNumber> {
-    return Maybe.tryResultBlocking {
+    return Maybe.tryMaybeBlocking {
         AndroidBigNumber(BigDecimal(value))
     }
 }
