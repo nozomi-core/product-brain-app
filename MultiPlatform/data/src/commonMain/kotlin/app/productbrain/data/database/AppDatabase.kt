@@ -16,9 +16,9 @@ import app.productbrain.data.model.productunit.ProductUnitDao
 import app.productbrain.data.model.productunit.ProductUnitEntity
 import app.productbrain.data.model.productvariant.ProductVariantDao
 import app.productbrain.data.model.productvariant.ProductVariantEntity
-import app.productbrain.data.model.vendor.RemoteVendorAliasEntity
+import app.productbrain.data.model.vendor.VendorAliasEntity
 import app.productbrain.data.model.vendor.VendorDao
-import app.productbrain.data.model.vendor.RemoteVendorEntity
+import app.productbrain.data.model.vendor.VendorEntity
 
 @Database(
     entities =
@@ -26,8 +26,8 @@ import app.productbrain.data.model.vendor.RemoteVendorEntity
             SettingEntity::class,
             LocalUserEntity::class,
             CurrentLocalUserEntity::class,
-            RemoteVendorEntity::class,
-            RemoteVendorAliasEntity::class,
+            VendorEntity::class,
+            VendorAliasEntity::class,
             ProductUnitEntity::class,
             ProductAbstractEntity::class,
             ProductVariantEntity::class

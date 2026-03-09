@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import app.productbrain.feature.NavRoute
 import app.productbrain.feature.Navigator
 import app.productbrain.feature.home.view.HomeListActionRoute
+import app.productbrain.feature.price.view.AddUnitPriceRoute
 import app.productbrain.feature.product.view.AddProductNoteRoute
 import app.productbrain.feature.product.view.AddProductRoute
 import app.productbrain.feature.vendor.view.AddVendorRoute
@@ -48,6 +49,10 @@ fun MainApp() {
             }
             composable(route = NavRoute.AddProduct::class) {
                 AddProductRoute()
+            }
+
+            composable(route = NavRoute.AddUnitPrice::class) {
+                AddUnitPriceRoute()
             }
         }
     }

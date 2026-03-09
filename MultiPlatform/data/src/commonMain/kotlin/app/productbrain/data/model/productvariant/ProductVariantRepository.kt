@@ -5,6 +5,7 @@ import app.productbrain.common.tryMaybe
 
 interface ProductVariantRepository {
     suspend fun upsert(model: ProductVariant): Maybe<Unit>
+    suspend fun queryAll(): Maybe<List<ProductVariant>>
 }
 
 class ProductVariantRepositoryActual(
@@ -12,5 +13,11 @@ class ProductVariantRepositoryActual(
 ): ProductVariantRepository {
     override suspend fun upsert(model: ProductVariant): Maybe<Unit> = tryMaybe {
         productVariantDao.upsert(ProductVariantMapper.toEntity(model))
+    }
+
+    override suspend fun queryAll(): Maybe<List<ProductVariant>> {
+        return tryMaybe {
+            productVariantDao.getAll().map { ProductVariantMapper.toModel(it) }
+        }
     }
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.productbrain.common.Forest
 import app.productbrain.data.model.fuzzytextsearch.FuzzyTextSearchEngine
-import app.productbrain.data.model.vendor.RemoteVendor
+import app.productbrain.data.model.vendor.Vendor
 import app.productbrain.data.model.vendor.VendorList
 import app.productbrain.data.model.vendor.VendorRepository
 import app.productbrain.extensions.normalise
@@ -49,15 +49,15 @@ class AddProductNoteViewModel(
         }
     }
 
-    fun submitWithVendor(vendor: RemoteVendor?) {
+    fun submitWithVendor(vendor: Vendor?) {
         if(vendor != null ) {
-            Forest.d("FoundVendor: ${vendor.id.value}|${vendor.name}")
+            Forest.d("FoundVendor: ${vendor.localId.value}|${vendor.name}")
         } else {
             Forest.d("Not Found")
         }
     }
 
-    suspend fun fuzzySearchVendors(vendors: VendorList): RemoteVendor? {
+    suspend fun fuzzySearchVendors(vendors: VendorList): Vendor? {
         val search = _viewState.value.vendorName
 
         return fuzzyTextSearchEngine.prepare(vendors.vendors, ::vendorSearchMatcher)
@@ -65,7 +65,7 @@ class AddProductNoteViewModel(
             .firstOrNull { it.isAutoMatchQualified }?.matched
     }
 
-    fun vendorSearchMatcher(vendor: RemoteVendor) = buildList {
+    fun vendorSearchMatcher(vendor: Vendor) = buildList {
         add(vendor.name)
         addAll(vendor.alias)
     }

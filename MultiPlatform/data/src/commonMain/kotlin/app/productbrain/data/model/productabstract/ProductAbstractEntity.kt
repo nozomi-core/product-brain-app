@@ -2,9 +2,13 @@ package app.productbrain.data.model.productabstract
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "product_abstract")
+@Entity(
+    tableName = "product_abstract",
+    indices = [Index(value = ["name"], unique = true)]
+)
 data class ProductAbstractEntity(
     @ColumnInfo("local_id") @PrimaryKey
     val localId: String,

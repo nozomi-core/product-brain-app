@@ -2,8 +2,9 @@ package app.productbrain.feature.vendor.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.productbrain.data.model.vendor.RemoteVendor
-import app.productbrain.data.model.vendor.RemoteVendorId
+import app.productbrain.common.RemoteId
+import app.productbrain.data.model.vendor.Vendor
+import app.productbrain.data.model.vendor.VendorLocalId
 import app.productbrain.data.model.vendor.VendorRepository
 import app.productbrain.extensions.normalise
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,9 +57,10 @@ class AddVendorViewModel(
         }
     }
 
-    private fun createEmptyVendor(): RemoteVendor {
-        return RemoteVendor(
-            id = RemoteVendorId.create(),
+    private fun createEmptyVendor(): Vendor {
+        return Vendor(
+            localId = VendorLocalId.create(),
+            remoteId = RemoteId.NoBinding,
             name = "",
             alias = listOf(
                 "MyAlias"
@@ -67,7 +69,7 @@ class AddVendorViewModel(
     }
 
     data class ViewState(
-        val vendor: RemoteVendor? = null
+        val vendor: Vendor? = null
     )
 
     sealed interface Action {

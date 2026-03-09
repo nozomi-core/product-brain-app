@@ -11,5 +11,6 @@ enum class ActionList(
 ) {
     ADD_VENDOR("Add Vendor"),
     ADD_PRODUCT_NOTE("Add Product Note"),
-    ADD_PRODUCT("Add Product")
+    ADD_PRODUCT("Add Product"),
+    ADD_UNIT_PRICE("Add Unit Price")
 }

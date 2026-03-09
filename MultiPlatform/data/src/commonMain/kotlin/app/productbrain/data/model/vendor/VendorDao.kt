@@ -9,18 +9,18 @@ interface VendorDao {
 
     //RemoteVendor
     @Upsert
-    suspend fun upsert(entity: RemoteVendorEntity)
+    suspend fun upsert(entity: VendorEntity)
 
     @Query("SELECT * FROM vendor")
-    suspend fun getAll(): List<RemoteVendorEntity>
+    suspend fun getAll(): List<VendorEntity>
 
     //RemoteVendorAlias
     @Query("SELECT * FROM vendor_alias")
-    suspend fun getAllAlias(): List<RemoteVendorAliasEntity>
+    suspend fun getAllAlias(): List<VendorAliasEntity>
 
-    @Query("DELETE FROM vendor_alias WHERE vendor_id = :vendorId")
-    suspend fun deleteVendorAliasByVendorId(vendorId: Long)
+    @Query("DELETE FROM vendor_alias WHERE vendor_local_id = :vendorLocalId")
+    suspend fun deleteVendorAliasByVendorId(vendorLocalId: Long)
 
     @Upsert
-    suspend fun upsert(entity: RemoteVendorAliasEntity)
+    suspend fun upsert(entity: VendorAliasEntity)
 }

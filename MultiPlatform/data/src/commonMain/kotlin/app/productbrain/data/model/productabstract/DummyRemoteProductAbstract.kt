@@ -1,5 +1,6 @@
 package app.productbrain.data.model.productabstract
 
+import app.productbrain.common.Optional
 import app.productbrain.common.RemoteId
 import app.productbrain.data.model.productunit.UnitName
 import app.productbrain.data.model.productvariant.ProductVariant
@@ -123,8 +124,15 @@ class ProductListBuilder {
 
     fun product(builder: ProductBuilder.() -> Unit) {
         val newProduct = ProductBuilder()
+
         productList.add(newProduct)
         builder(newProduct)
+
+        newProduct.variant {
+            id(newProduct.rawRemoteId!!)
+            name = newProduct.name
+            isDefaultVariant = true
+        }
     }
 
     fun build(): BuiltProducts {
@@ -143,8 +151,8 @@ class ProductListBuilder {
                     remoteId = RemoteId.Bound(ProductVariantRemoteId(variant.remoteIdRaw!!)),
                     parentProductId = abstractProduct.localId,
                     name = variant.name!!,
-                    parent = abstractProduct,
-                    isDefaultVariant = false
+                    parent = Optional.Value(abstractProduct),
+                    isDefaultVariant = variant.isDefaultVariant
                 )
             }
 
@@ -180,6 +188,7 @@ class ProductBuilder() {
 
     var rawRemoteId: String? = null
 
+
     fun id(ulid: String) {
         rawRemoteId = "REM$ulid"
     }
@@ -195,6 +204,7 @@ class VariantBuilder() {
     var name: String? = null
     var alias: List<String>? = null
     var remoteIdRaw: String? = null
+    var isDefaultVariant = false
 
     fun id(ulid: String) {
         remoteIdRaw = "REM${ulid}"

@@ -6,7 +6,6 @@ import app.productbrain.common.tryMaybe
 interface ProductAbstractRepository {
     suspend fun upsert(model: ProductAbstract): Maybe<Unit>
     suspend fun getAbstractProductList(): Maybe<AbstractProductList>
-    suspend fun syncRemoteProductList(): Maybe<Unit>
 }
 
 class ProductAbstractRepositoryActual(
@@ -18,14 +17,5 @@ class ProductAbstractRepositoryActual(
 
     override suspend fun getAbstractProductList(): Maybe<AbstractProductList> {
         return TODO("Not yet implemented")
-    }
-
-    override suspend fun syncRemoteProductList(): Maybe<Unit> {
-        return tryMaybe {
-            allProducts.build().products.forEach {
-                val entity = ProductAbstractMapper.toRemoteEntity(it)
-                productAbstractDao.upsert(entity)
-            }
-        }
     }
 }

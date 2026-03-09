@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
 import app.productbrain.feature.NavRoute
 import app.productbrain.feature.Navigator
 import app.productbrain.feature.home.viewmodel.ActionList
@@ -31,6 +32,7 @@ fun HomeListActionRoute(
                             ActionList.ADD_VENDOR -> navigator.toRoute(NavRoute.AddVendorRoute)
                             ActionList.ADD_PRODUCT_NOTE -> navigator.toRoute(NavRoute.AddProductNote)
                             ActionList.ADD_PRODUCT -> navigator.toRoute(NavRoute.AddProduct)
+                            ActionList.ADD_UNIT_PRICE -> navigator.toRoute(NavRoute.AddUnitPrice)
                         }
                      }
                 ) {

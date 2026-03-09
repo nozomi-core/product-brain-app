@@ -1,17 +1,17 @@
-package app.productbrain.data.model.productabstract
+package app.productbrain.data.model.vendor
 
 import app.productbrain.common.RemoteId
+import app.productbrain.common.Ulid
 import app.productbrain.common.UlidFactory
 import app.productbrain.common.createLocalId
-import app.productbrain.data.model.productunit.UnitName
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class ProductAbstractLocalId(
+value class VendorLocalId(
     val value: String
 ) {
     companion object {
-        fun create(): ProductAbstractLocalId = ProductAbstractLocalId(createLocalId())
+        fun create(): VendorLocalId = VendorLocalId(createLocalId())
     }
 
     override fun toString(): String {
@@ -20,7 +20,7 @@ value class ProductAbstractLocalId(
 }
 
 @JvmInline
-value class ProductAbstractRemoteId(
+value class VendorRemoteId(
     val value: String
 ) {
     override fun toString(): String {
@@ -28,10 +28,9 @@ value class ProductAbstractRemoteId(
     }
 }
 
-data class ProductAbstract(
-    val localId: ProductAbstractLocalId,
-    val remoteId: RemoteId<ProductAbstractRemoteId>,
+data class Vendor(
+    val localId: VendorLocalId,
+    val remoteId: RemoteId<VendorRemoteId>,
     val name: String,
-    val units: List<UnitName>,
     val alias: List<String>
 )

@@ -6,8 +6,9 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "vendor")
-data class RemoteVendorEntity(
-    @ColumnInfo("id") @PrimaryKey val id: String,
+data class VendorEntity(
+    @ColumnInfo("local_id") @PrimaryKey val localId: String,
+    @ColumnInfo("remote_id") val remoteId: String?,
     @ColumnInfo("name") val name: String
 )
 
@@ -15,15 +16,15 @@ data class RemoteVendorEntity(
     tableName = "vendor_alias",
     foreignKeys = [
         ForeignKey(
-            entity = RemoteVendorEntity::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("vendor_id"),
+            entity = VendorEntity::class,
+            parentColumns = arrayOf("local_id"),
+            childColumns = arrayOf("vendor_local_id"),
             onDelete = ForeignKey.CASCADE,
         )
     ]
 )
-data class RemoteVendorAliasEntity(
+data class VendorAliasEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo("vendor_id") val vendorId: String,
+    @ColumnInfo("vendor_local_id") val vendorLocalId: String,
     @ColumnInfo("alias") val alias: String
 )

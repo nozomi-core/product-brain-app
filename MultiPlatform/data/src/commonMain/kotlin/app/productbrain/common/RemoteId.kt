@@ -10,4 +10,11 @@ sealed class RemoteId<out T> {
             is NoBinding -> null
         }
     }
+
+    companion object {
+        fun <T> fromIdString(id: String?, mapper: (String) -> T): RemoteId<T> {
+            if(id == null) return NoBinding
+            return Bound(mapper(id))
+        }
+    }
 }

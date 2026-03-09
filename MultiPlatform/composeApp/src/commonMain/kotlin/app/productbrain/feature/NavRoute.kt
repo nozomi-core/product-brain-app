@@ -11,4 +11,6 @@ sealed class NavRoute {
     object AddProductNote: NavRoute()
     @Serializable
     object AddProduct: NavRoute()
+    @Serializable
+    object AddUnitPrice: NavRoute()
 }

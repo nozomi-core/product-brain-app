@@ -1,8 +1,8 @@
 package app.productbrain.feature.product.usecase
 
 import app.productbrain.common.Maybe
+import app.productbrain.common.Optional
 import app.productbrain.common.RemoteId
-import app.productbrain.common.tryMaybe
 import app.productbrain.data.model.productabstract.ProductAbstract
 import app.productbrain.data.model.productabstract.ProductAbstractLocalId
 import app.productbrain.data.model.productabstract.ProductAbstractRepository
@@ -34,7 +34,7 @@ class AddProductUseCase(
             RemoteId.NoBinding,
             parentProductId = product.localId,
             name,
-            product,
+            Optional.Value(product),
             isDefaultVariant = true
         )
 

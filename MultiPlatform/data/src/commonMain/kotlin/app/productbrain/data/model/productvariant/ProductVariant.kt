@@ -1,5 +1,6 @@
 package app.productbrain.data.model.productvariant
 
+import app.productbrain.common.Optional
 import app.productbrain.common.RemoteId
 import app.productbrain.common.UlidFactory
 import app.productbrain.data.model.productabstract.ProductAbstract
@@ -13,18 +14,26 @@ value class ProductVariantLocalId(
     companion object {
         fun create(): ProductVariantLocalId = ProductVariantLocalId("LOC${UlidFactory.create().value}")
     }
+
+    override fun toString(): String {
+        return value
+    }
 }
 
 @JvmInline
 value class ProductVariantRemoteId(
     val value: String
-)
+) {
+    override fun toString(): String {
+        return value
+    }
+}
 
 data class ProductVariant(
     val localId: ProductVariantLocalId,
     val remoteId: RemoteId<ProductVariantRemoteId>,
     val parentProductId: ProductAbstractLocalId,
     val name: String,
-    val parent: ProductAbstract,
+    val parent: Optional<ProductAbstract>,
     val isDefaultVariant: Boolean
 )

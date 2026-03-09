@@ -44,6 +44,7 @@ sealed class ProductUnit(
     }
 
     class Qty(amount: Double): ProductUnit(amount, UnitName.QTY)
+    class Unknown(amount: Double): ProductUnit(amount, UnitName.UNKNOWN)
 
     companion object {
         fun of(amount: Double, name: UnitName): ProductUnit {
@@ -63,6 +64,7 @@ sealed class ProductUnit(
                 UnitName.METER -> Meter(amount)
                 UnitName.ROLL_REGULAR -> Regular(amount)
                 UnitName.QTY -> Qty(amount)
+                UnitName.UNKNOWN -> Unknown(amount)
             }
         }
     }
@@ -118,9 +120,17 @@ enum class UnitName(
     //Roll
     ROLL_REGULAR(UnitSystem.ROLL, "roll_regular", 1.0),
 
-    QTY(UnitSystem.QTY, "qty", 1.0)
+    QTY(UnitSystem.QTY, "qty", 1.0),
+
+    UNKNOWN(UnitSystem.UNKNOWN, "unknown", 1.0)
 
     ;
+
+    companion object {
+        fun of(key: String): UnitName {
+            return entries.find { it.key == key } ?: UNKNOWN
+        }
+    }
 }
 
 enum class UnitSystem {
@@ -130,5 +140,6 @@ enum class UnitSystem {
     LENGTH,
     CUP,
     ROLL,
-    QTY
+    QTY,
+    UNKNOWN
 }

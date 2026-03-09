@@ -4,7 +4,7 @@ sealed class Maybe<out T> {
     class Value<T>(val value: T): Maybe<T>()
     class Error(val exception: Exception?): Maybe<Nothing>()
 
-    fun onSuccess(callback: (T) -> Unit): Maybe<T> {
+    suspend fun onSuccess(callback: suspend (T) -> Unit): Maybe<T> {
         if(this is Value) {
             callback(value)
         }

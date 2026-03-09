@@ -1,6 +1,7 @@
 package app.productbrain.di
 
 import app.productbrain.feature.product.usecase.AddProductUseCase
+import app.productbrain.feature.product.usecase.MatchProductUseCase
 import app.productbrain.feature.startup.usecase.CompleteOnBoardingUseCase
 import app.productbrain.feature.startup.usecase.CreateLocalUserUseCase
 import app.productbrain.feature.startup.usecase.IsUserOnBoardedUseCase
@@ -8,6 +9,7 @@ import app.productbrain.feature.startup.usecase.GetCurrentLocalUserUseCase
 import app.productbrain.feature.startup.usecase.InitDatabaseUseCase
 import app.productbrain.feature.startup.usecase.SetCurrentLocalUserUseCase
 import app.productbrain.feature.startup.usecase.StartUpUseCase
+import app.productbrain.feature.vendor.usecase.MatchVendorUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -17,6 +19,8 @@ val useCaseModule = module {
     factory { IsUserOnBoardedUseCase(get()) }
     factory { SetCurrentLocalUserUseCase(get()) }
     factory { StartUpUseCase(get(), get(), get()) }
-    factory { InitDatabaseUseCase(get(), get(), get()) }
+    factory { InitDatabaseUseCase(get(), get(), get(), get()) }
     factory { AddProductUseCase(get(), get(), get()) }
+    factory { MatchVendorUseCase(get()) }
+    factory { MatchProductUseCase(get()) }
 }

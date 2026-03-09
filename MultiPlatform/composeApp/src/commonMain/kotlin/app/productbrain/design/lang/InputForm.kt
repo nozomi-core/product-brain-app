@@ -11,4 +11,11 @@ sealed class InputForm<out T>(
         is Valid -> value
         is Invalid -> lastValue
     }
+
+    override fun toString(): String {
+        return when(this) {
+            is Invalid<*> -> "Invalid#${this.text}"
+            is Valid<*> -> "Valid#${this.text}"
+        }
+    }
 }
