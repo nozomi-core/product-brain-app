@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import app.productbrain.data.model.productabstract.ProductAbstractEntity
+import app.productbrain.data.model.productabstract.ProductAbstractLocalId
 
 @Entity(
     tableName = "product_variant",
@@ -26,27 +27,9 @@ data class ProductVariantEntity(
     @ColumnInfo("remote_id")
     val remoteId: String?,
     @ColumnInfo("abstract_product_id")
-    val abstractProductId: String,
+    val abstractProductId: ProductAbstractLocalId,
     @ColumnInfo("name")
     val name: String,
     @ColumnInfo("is_default")
     val isDefaultVariant: Boolean
 )
-
-/*
-@Entity(
-    tableName = "product_variant_alias",
-    foreignKeys = [
-        ForeignKey(
-            entity = ProductVariantEntity::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("variant_alias"),
-            onDelete = ForeignKey.NO_ACTION,
-            onUpdate = ForeignKey.CASCADE
-        )
-    ])
-data class RemoteVariantAliasEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo("variant_id") val variantId: String,
-    @ColumnInfo("alias") val alias: String
-)*/

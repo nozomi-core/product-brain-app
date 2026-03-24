@@ -5,19 +5,20 @@ import app.productbrain.common.tryMaybe
 
 interface ProductVariantRepository {
     suspend fun upsert(model: ProductVariant): Maybe<Unit>
-    suspend fun queryAll(): Maybe<List<ProductVariant>>
+    suspend fun getAll(): Maybe<List<ProductVariant>>
 }
 
 class ProductVariantRepositoryActual(
-    private val productVariantDao: ProductVariantDao
+    private val productVariantDao: ProductVariantDao,
+    private val productVariantResolver: ProductVariantResolver
 ): ProductVariantRepository {
     override suspend fun upsert(model: ProductVariant): Maybe<Unit> = tryMaybe {
-        productVariantDao.upsert(ProductVariantMapper.toEntity(model))
+        productVariantDao.upsert(model.toEntity())
     }
 
-    override suspend fun queryAll(): Maybe<List<ProductVariant>> {
+    override suspend fun getAll(): Maybe<List<ProductVariant>> {
         return tryMaybe {
-            productVariantDao.getAll().map { ProductVariantMapper.toModel(it) }
+            productVariantResolver.resolve(productVariantDao.getAll()).values.toList()
         }
     }
 }

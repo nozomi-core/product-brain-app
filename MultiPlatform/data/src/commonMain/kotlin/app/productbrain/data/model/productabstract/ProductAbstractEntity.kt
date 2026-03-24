@@ -11,13 +11,14 @@ import androidx.room.PrimaryKey
 )
 data class ProductAbstractEntity(
     @ColumnInfo("local_id") @PrimaryKey
-    val localId: String,
+    val localId: ProductAbstractLocalId,
     @ColumnInfo("remote_id")
     val remoteId: String?,
     @ColumnInfo("name")
     val name: String,
-    @ColumnInfo("units")
-    val units: List<String>,
+    @ColumnInfo("unit_system")
+    val unitSystem: List<String>,
     @ColumnInfo("alias")
     val alias: List<String>
 )
+

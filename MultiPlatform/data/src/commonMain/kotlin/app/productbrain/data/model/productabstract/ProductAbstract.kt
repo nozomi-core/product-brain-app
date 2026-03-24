@@ -1,9 +1,8 @@
 package app.productbrain.data.model.productabstract
 
 import app.productbrain.common.RemoteId
-import app.productbrain.common.UlidFactory
 import app.productbrain.common.createLocalId
-import app.productbrain.data.model.productunit.UnitName
+import app.productbrain.data.model.productunit.UnitSystem
 import kotlin.jvm.JvmInline
 
 @JvmInline
@@ -32,6 +31,6 @@ data class ProductAbstract(
     val localId: ProductAbstractLocalId,
     val remoteId: RemoteId<ProductAbstractRemoteId>,
     val name: String,
-    val units: List<UnitName>,
+    val unitSystem: List<UnitSystem>,
     val alias: List<String>
 )

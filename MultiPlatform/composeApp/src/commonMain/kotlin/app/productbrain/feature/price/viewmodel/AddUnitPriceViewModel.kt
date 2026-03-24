@@ -13,14 +13,18 @@ import app.productbrain.data.model.productvariant.ProductVariant
 import app.productbrain.data.model.productvariant.ProductVariantRepository
 import app.productbrain.data.model.settings.SettingItem
 import app.productbrain.data.model.settings.SettingsRepository
-import app.productbrain.data.model.vendor.Vendor
 import app.productbrain.data.model.vendor.VendorList
 import app.productbrain.data.model.vendor.VendorRepository
 import app.productbrain.design.lang.InputForm
 import app.productbrain.feature.product.usecase.MatchProductUseCase
 import app.productbrain.feature.vendor.usecase.MatchVendorUseCase
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -38,7 +42,7 @@ class AddUnitPriceViewModel(
     }
 
     private val lazyProducts = LazyState {
-        productVariantRepository.queryAll()
+        productVariantRepository.getAll()
     }
 
     private val _viewState = MutableStateFlow(
@@ -50,12 +54,32 @@ class AddUnitPriceViewModel(
 
     val viewState = _viewState.asStateFlow()
 
+    @OptIn(FlowPreview::class)
+    private val productSearch =
+        _viewState.map { it.productName }
+        .distinctUntilChanged()
+        .debounce(200)
+
     init {
         runBlocking {
             val currencyCode = settingsRepository.get(SettingItem.CurrencyCode)
             _viewState.value = viewState.value.copy(
                 unitPrice = InputForm.Invalid("", CurrencyAmount(BigNumber.Zero, currencyCode))
             )
+        }
+
+        viewModelScope.launch {
+            productSearch.collectLatest { productText ->
+                val productList = lazyProducts.value.getOrNull()
+
+                if(productList != null) {
+                    val matchedProduct = matchProductUseCase(productText, productList)
+
+
+
+                    Forest.d("Product: ${matchedProduct?.name}")
+                }
+            }
         }
     }
 

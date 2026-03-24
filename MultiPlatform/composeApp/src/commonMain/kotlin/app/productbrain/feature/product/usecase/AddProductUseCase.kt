@@ -7,6 +7,7 @@ import app.productbrain.data.model.productabstract.ProductAbstract
 import app.productbrain.data.model.productabstract.ProductAbstractLocalId
 import app.productbrain.data.model.productabstract.ProductAbstractRepository
 import app.productbrain.data.model.productunit.UnitName
+import app.productbrain.data.model.productunit.UnitSystem
 import app.productbrain.data.model.productvariant.ProductVariant
 import app.productbrain.data.model.productvariant.ProductVariantLocalId
 import app.productbrain.data.model.productvariant.ProductVariantRepository
@@ -20,7 +21,7 @@ class AddProductUseCase(
 
     suspend operator fun invoke(
         name: String,
-        unit: UnitName
+        unit: UnitSystem
     ): Maybe<ProductVariant> = transactionProvider.tryTransaction {
         val localProductId = ProductAbstractLocalId.create()
 

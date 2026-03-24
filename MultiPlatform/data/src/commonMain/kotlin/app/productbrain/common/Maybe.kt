@@ -33,6 +33,14 @@ sealed class Maybe<out T> {
         }
     }
 
+    fun toOptional(): Optional<T> {
+        return if(this is Value) {
+            Optional.Value(value)
+        } else {
+            Optional.None
+        }
+    }
+
     companion object {
         suspend fun <T> tryMaybe(block: suspend () -> T): Maybe<T> {
             return try {

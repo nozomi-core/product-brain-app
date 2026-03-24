@@ -39,7 +39,7 @@ class AddProductViewModel(
                 viewModelScope.launch {
                     addProductUseCase(
                         name = _viewState.value.productName,
-                        unit =  _viewState.value.productUnit.getOrLast()
+                        unit =  _viewState.value.productUnit.getOrLast().unitSystem
                     )
                 }
             }

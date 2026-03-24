@@ -3,6 +3,7 @@ package app.productbrain.data.model.productabstract
 import app.productbrain.common.Optional
 import app.productbrain.common.RemoteId
 import app.productbrain.data.model.productunit.UnitName
+import app.productbrain.data.model.productunit.UnitSystem
 import app.productbrain.data.model.productvariant.ProductVariant
 import app.productbrain.data.model.productvariant.ProductVariantLocalId
 import app.productbrain.data.model.productvariant.ProductVariantRemoteId
@@ -11,7 +12,7 @@ val allProducts = buildProducts {
     product {
         id("01KEY303YMYPPA9SD6G8PKSMEA")
         name = "Apple"
-        units = listOf(UnitName.KILO)
+        units = listOf(UnitSystem.WEIGHT)
 
         variant {
             id("01KF7GTPC2QD6F6KG8T1QDSRQ5")
@@ -35,7 +36,7 @@ val allProducts = buildProducts {
     product {
         id("01KEY30GCJ477FXJP8E97XCFYW")
         name = "Chips"
-        units = listOf(UnitName.GRAM)
+        units = listOf(UnitSystem.WEIGHT)
 
         alias = listOf("Crisps")
     }
@@ -43,20 +44,20 @@ val allProducts = buildProducts {
     product {
         id("01KEY30WQ9ZHDP0W5GN6WRTCGS")
         name = "Coffee Beans"
-        units = listOf(UnitName.KILO)
+        units = listOf(UnitSystem.WEIGHT)
         alias = listOf("Coffee")
     }
     product {
         id("01KEY3130BFTY31J87E5J30S01")
         name = "Coffee Cup"
-        units = listOf(UnitName.CUP_MEDIUM)
+        units = listOf(UnitSystem.UNKNOWN)
         alias = listOf("Coffee")
     }
 
     product {
         id("01KEY31EGQBPNHTH195V6Q0RDZ")
         name = "Juice"
-        units = listOf(UnitName.LITER)
+        units = listOf(UnitSystem.VOLUME)
 
         variant {
             id("01KF7GVNVAB6WSQ024PWCMDSAZ")
@@ -82,7 +83,7 @@ val allProducts = buildProducts {
     product {
         id("01KEY31PGKA4JEYVW8RQFDFFKM")
         name = "Milk"
-        units = listOf(UnitName.LITER)
+        units = listOf(UnitSystem.VOLUME)
 
         variant {
             id("01KF7GWJ619A1QYHF9H9T7VK84")
@@ -98,14 +99,14 @@ val allProducts = buildProducts {
     product {
         id("01KEY33977G53A5EN7GFV8E6EJ")
         name = "Soft Drink"
-        units = listOf(UnitName.LITER)
+        units = listOf(UnitSystem.VOLUME)
         alias = listOf("Cola", "Coke", "Coke Cola", "Fanta", "Sprite", "Lift", "Kirks")
     }
 
     product {
         id("01KEY31X239CRAQTKR2PTD0Q2K")
         name = "Toilet Paper"
-        units = listOf(UnitName.ROLL_REGULAR)
+        units = listOf(UnitSystem.UNKNOWN)
 
         variant {
             id("01KF7GWY2SYG0ZMYSWM14DFZC8")
@@ -141,7 +142,7 @@ class ProductListBuilder {
                 remoteId = RemoteId.Bound(ProductAbstractRemoteId(product.rawRemoteId!!)),
                 localId = ProductAbstractLocalId(product.rawRemoteId!!),
                 name = product.name!!,
-                units = product.units!!,
+                unitSystem = product.units!!,
                 alias = product.alias ?: listOf()
             )
 
@@ -184,7 +185,7 @@ class ProductBuilder() {
     val variantList = mutableListOf<VariantBuilder>()
     var name: String? = null
     var alias: List<String>? = null
-    var units: List<UnitName>? = null
+    var units: List<UnitSystem>? = null
 
     var rawRemoteId: String? = null
 

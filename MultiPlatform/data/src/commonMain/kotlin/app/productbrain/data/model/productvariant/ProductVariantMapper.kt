@@ -2,27 +2,28 @@ package app.productbrain.data.model.productvariant
 
 import app.productbrain.common.Optional
 import app.productbrain.common.RemoteId
+import app.productbrain.data.model.productabstract.ProductAbstract
 import app.productbrain.data.model.productabstract.ProductAbstractLocalId
 
-object ProductVariantMapper {
-    fun toEntity(model: ProductVariant): ProductVariantEntity {
-        return ProductVariantEntity(
-            localId = model.localId.value,
-            remoteId = model.remoteId.toIdString(),
-            abstractProductId = model.parentProductId.value,
-            name = model.name,
-            isDefaultVariant = model.isDefaultVariant
-        )
-    }
+fun ProductVariant.toEntity(): ProductVariantEntity {
+    return ProductVariantEntity(
+        localId = localId.value,
+        remoteId = remoteId.toIdString(),
+        abstractProductId = parentProductId,
+        name = name,
+        isDefaultVariant = isDefaultVariant
+    )
+}
 
-    fun toModel(entity: ProductVariantEntity): ProductVariant {
-        return ProductVariant(
-            localId = ProductVariantLocalId(entity.localId),
-            remoteId = RemoteId.fromIdString(entity.remoteId) { ProductVariantRemoteId(it) },
-            parentProductId = ProductAbstractLocalId(entity.abstractProductId),
-            name = entity.name,
-            isDefaultVariant = entity.isDefaultVariant,
-            parent = Optional.None
-        )
-    }
+fun ProductVariantEntity.toModel(
+    parent: Optional<ProductAbstract> = Optional.None
+): ProductVariant {
+    return ProductVariant(
+        localId = ProductVariantLocalId(localId),
+        remoteId = RemoteId.fromIdString(remoteId) { ProductVariantRemoteId(it) },
+        parentProductId = abstractProductId,
+        name = name,
+        isDefaultVariant = isDefaultVariant,
+        parent = parent
+    )
 }

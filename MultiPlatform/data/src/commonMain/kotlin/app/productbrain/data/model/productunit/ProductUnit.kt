@@ -113,12 +113,12 @@ enum class UnitName(
     METER(UnitSystem.LENGTH,"m", 100.0),
 
     //Cup
-    CUP_SMALL(UnitSystem.CUP,"cup_small", 1.0),
-    CUP_MEDIUM(UnitSystem.CUP,"cup_medium", 1.0),
-    CUP_LARGE(UnitSystem.CUP,"cup_large", 1.0),
+    CUP_SMALL(UnitSystem.OTHER,"cup_small", 1.0),
+    CUP_MEDIUM(UnitSystem.OTHER,"cup_medium", 1.0),
+    CUP_LARGE(UnitSystem.OTHER,"cup_large", 1.0),
 
     //Roll
-    ROLL_REGULAR(UnitSystem.ROLL, "roll_regular", 1.0),
+    ROLL_REGULAR(UnitSystem.OTHER, "roll_regular", 1.0),
 
     QTY(UnitSystem.QTY, "qty", 1.0),
 
@@ -133,13 +133,19 @@ enum class UnitName(
     }
 }
 
-enum class UnitSystem {
-    WEIGHT,
-    VOLUME,
-    TIME,
-    LENGTH,
-    CUP,
-    ROLL,
-    QTY,
-    UNKNOWN
+enum class UnitSystem(val id: String) {
+    WEIGHT("weight"),
+    VOLUME("volume"),
+    TIME("time"),
+    LENGTH("length"),
+    QTY("qty"),
+    OTHER("other"),
+    UNKNOWN("unknown");
+
+
+    companion object {
+        fun of(key: String): UnitSystem {
+            return UnitSystem.entries.find { it.id == key } ?: UNKNOWN
+        }
+    }
 }
